@@ -13,6 +13,7 @@ import fr.braddy.models.Point;
 
 
 
+
 @Stateless
 public class PointsEJB {
 	
@@ -29,7 +30,21 @@ public class PointsEJB {
 		point.setLongitude(123456789);
 		em.persist(point);
 		return point;
+	
+	}
+	
+	public Point ajouterPoint(Point point) {
+		em.persist(point);
+		return point;
 		
+	}
+	
+	public Point modifierPoint(Point point) {
+		return em.merge(point);
+	}
+	
+	public void supprimerPoint(int id) {
+		em.remove(em.find(Point.class, id));
 	}
 	
 	public List<Point> findAllPoint() {
