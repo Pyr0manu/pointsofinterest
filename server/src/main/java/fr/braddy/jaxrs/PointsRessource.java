@@ -24,8 +24,8 @@ public class PointsRessource {
 	@EJB
 	private PointsEJB pointEJB;
 	
-	//@GET
-    //public Point testPoint(){return pointEJB.creerPointTest();}
+//	@GET
+//    public Point testPoint(){return pointEJB.creerPointTest();}
 	
 	@GET
 	public List<Point> afficherListPoint(){

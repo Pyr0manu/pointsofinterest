@@ -1,21 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import 'zone.js';
+import 'reflect-metadata';
 import { AppComponent } from './app.component';
-import { PointViewComponent } from './point-view/point-view.component';
 import { MapComponent } from './map/map.component';
 import {PointsService} from "./points.service";
 import { PointsComponent } from './points/points.component';
+import { PointFormComponent } from './point-form/point-form.component';
+import {Http, HttpModule} from "@angular/http";
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    PointViewComponent,
     MapComponent,
-    PointsComponent
+    PointsComponent,
+    PointFormComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,HttpModule
   ],
   providers: [PointsService],
   bootstrap: [AppComponent]
