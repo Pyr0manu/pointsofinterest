@@ -1,8 +1,11 @@
 package fr.braddy.jaxrs;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -10,7 +13,7 @@ import javax.ws.rs.core.MediaType;
 import fr.braddy.EJB.PointsEJB;
 import fr.braddy.models.Point;
 
-@Path("point")
+@Path("points")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class PointsRessource {
@@ -18,10 +21,18 @@ public class PointsRessource {
 	@EJB
 	private PointsEJB pointEJB;
 	
+	//@GET
+    //public Point testPoint(){return pointEJB.creerPointTest();}
+	
 	@GET
-    public Point testPoint(){
-		return pointEJB.creerPointTest();
-		
-    }
+	public List<Point> afficherListPoint(){
+		return pointEJB.findAllPoint();
+	}
+	
+	@POST
+	public Point creationPoint(){
+		Point point = new Point();
+		return point;
+	}
 
 }
