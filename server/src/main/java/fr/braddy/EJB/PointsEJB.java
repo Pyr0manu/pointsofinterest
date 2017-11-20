@@ -11,7 +11,7 @@ import fr.braddy.models.Points;
 @Stateless
 public class PointsEJB {
 	
-	@PersistenceContext(name = "projetfinal")
+	@PersistenceContext
 	EntityManager em;
 	
 	public void  creerPointTest() {

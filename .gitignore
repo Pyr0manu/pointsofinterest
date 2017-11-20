@@ -32,6 +32,10 @@ testem.log
 #System Files
 .DS_Store
 
+# idea
+.idea
+*.iml
+
 ### Eclipse ###
 
 .metadata
