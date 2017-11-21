@@ -22,3 +22,4 @@ Aller sur l'URL : http://localhost:8080/poi/api/points
 Ne pas oublier de Recommenter de décommenter les méthodes nécessaires
 
 ### 3. Aller sur l'URL localhost:4200
+Et voilà !
