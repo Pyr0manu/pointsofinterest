@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import 'zone.js';
 import 'reflect-metadata';
 import { AppComponent } from './app.component';
@@ -9,6 +10,7 @@ import { PointsComponent } from './points/points.component';
 import { PointFormComponent } from './point-form/point-form.component';
 import {Http, HttpModule} from "@angular/http";
 import { SelectedpointComponent } from './selectedpoint/selectedpoint.component';
+import {} from '@types/googlemaps';
 
 
 @NgModule({
@@ -20,7 +22,7 @@ import { SelectedpointComponent } from './selectedpoint/selectedpoint.component'
     SelectedpointComponent
   ],
   imports: [
-    BrowserModule,HttpModule
+    BrowserModule,HttpModule, FormsModule
   ],
   providers: [PointsService],
   bootstrap: [AppComponent]
