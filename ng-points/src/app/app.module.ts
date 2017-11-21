@@ -8,6 +8,7 @@ import {PointsService} from "./points.service";
 import { PointsComponent } from './points/points.component';
 import { PointFormComponent } from './point-form/point-form.component';
 import {Http, HttpModule} from "@angular/http";
+import { SelectedpointComponent } from './selectedpoint/selectedpoint.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {Http, HttpModule} from "@angular/http";
     AppComponent,
     MapComponent,
     PointsComponent,
-    PointFormComponent
+    PointFormComponent,
+    SelectedpointComponent
   ],
   imports: [
     BrowserModule,HttpModule

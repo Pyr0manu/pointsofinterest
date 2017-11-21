@@ -42,6 +42,7 @@ public class PointsRessource {
 		return pointEJB.modifierPoint(point);
 		
 	}
+
 	@DELETE
 	@Path("{id}")
 	public void supprimerPoint (@PathParam("id") int id) {
