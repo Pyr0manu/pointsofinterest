@@ -9,6 +9,7 @@ import { PointsComponent } from './points/points.component';
 import { PointFormComponent } from './point-form/point-form.component';
 import {Http, HttpModule} from "@angular/http";
 import { SelectedpointComponent } from './selectedpoint/selectedpoint.component';
+import {} from '@types/googlemaps';
 
 
 @NgModule({
