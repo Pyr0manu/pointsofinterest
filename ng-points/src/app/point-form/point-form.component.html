@@ -1,16 +1,22 @@
 <form name="point-form" #pointForm="ngForm">
-  <label>Name : <input type="text" [(ngModel)] = "point.name" name="name" minlength="3"></label>
-  <label>Type : <select>
-    <option></option>
-    <option></option>
-    <option></option>
-
-  </select>
+  <label>Name : <input type="text" [(ngModel)] = "point.nom" name="name" minlength="3"></label>
+  <br/>
+  <label>Categorie :
+    <select name="categorie" >
+      <option *ngFor="let categorie of getCategories()" value="{{categorie}}">{{categorie.nom}}</option>
+    </select>
   </label>
+  <br/>
+  <label>Description : <input type="text" [(ngModel)] = "point.description" name="description" minlength="5"></label>
+  <br/>
   <label>Address : <input type="text" [(ngModel)] = "point.address" name="address" minlength="5"></label>
+  <br/>
   <label>Latitude : <input type="number" [(ngModel)] = "point.latitude" name="latitude"></label>
+  <br/>
   <label>Longitude : <input type="number" [(ngModel)] = "point.longitude" name="longitude"></label>
+  <br/>
 
   <button type="button" [disabled]="!pointForm.form.valid" (click) = "createPoint()">Add point</button>
 
 </form>
+

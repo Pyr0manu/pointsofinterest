@@ -23,4 +23,8 @@ export class PointsComponent implements OnInit {
   getPoints():Point[]{
     return this.points;
   }
+
+  updateList(point:Point){
+    this.points.push(point)
+  }
 }

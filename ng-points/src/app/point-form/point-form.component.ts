@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {Point} from "../../models/models";
+import {Categorie, Point} from "../../models/models";
 import {PointsService} from "../points.service";
 
 
@@ -10,25 +10,39 @@ import {PointsService} from "../points.service";
 })
 export class PointFormComponent implements OnInit {
   point:Point;
+  copy:Point;
+  categories :Categorie[] = [];
+
 
   @Output() eventEmitter: EventEmitter<Point> = new EventEmitter();
 
-  constructor(public service:PointsService) { }
+  constructor(public service:PointsService) {
+    this.service.getCategorie().subscribe(categories => this.categories = categories);
+  };
 
   ngOnInit() {
       this.point =  {
-        id: 0,
-        name : "",
+        nom : "",
         address: "",
         description: "",
         latitude : 0,
         longitude : 0,
-        type: ""
+        categorie: null
     };
   }
 
-  createUser(){
-    this.service.createPoint(this.point).subscribe(response => this.eventEmitter.emit(this.point));
+  createPoint(){
+    this.copy= {...this.point}
+    this.service.createPoint(this.point).subscribe(()=> {
+      this.eventEmitter.emit(this.copy)
+      this.point.nom="";
+      this.point.address="";
+      this.point.description="";
+     })
+  }
+
+  getCategories():Categorie[]{
+    return this.categories;
   }
 
 

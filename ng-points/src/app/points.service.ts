@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs/Observable";
-import {Point} from "../models/models";
+import {Categorie, Point} from "../models/models";
 import {Http} from "@angular/http";
 import "rxjs/add/operator/map"
 
@@ -12,6 +12,10 @@ export class PointsService {
 
   getPoints():Observable<Point[]>{
     return this.http.get('http://localhost:8080/poi/api/points').map(response =>response.json());
+  }
+
+  getCategorie():Observable<Categorie[]>{
+    return this.http.get('http://localhost:8080/poi/api/points/categories').map(response =>response.json());
   }
 
   createPoint(point:Point){

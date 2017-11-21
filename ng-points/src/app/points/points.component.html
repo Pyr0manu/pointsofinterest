@@ -1,17 +1,17 @@
 
-
+<app-point-form (eventEmitter)="updateList($event)"> </app-point-form>
 <h2>List of Points of Interest</h2>
 
 <table>
 
   <tr>
-    <td>NAME</td><td>TYPE</td><td>LATITUDE</td><td>LONGITUDE</td><td>ADDRESS</td><td>DESCRIPTION</td>
+    <td>NAME</td><td>CATEGORIE</td><td>LATITUDE</td><td>LONGITUDE</td><td>ADDRESS</td><td>DESCRIPTION</td>
   </tr>
 
 
   <tr  *ngFor="let point of getPoints(); let e=even; let o=odd"  [ngClass]="{odd:o, even:e}">
-    <td>      {{point.name}}</td>
-    <td>      {{point.type}}</td>
+    <td>      {{point.nom}}</td>
+    <td>      {{point.categorie}}</td>
     <td>      {{point.latitude}}</td>
     <td>      {{point.longitude}}</td>
     <td>      {{point.address}}</td>

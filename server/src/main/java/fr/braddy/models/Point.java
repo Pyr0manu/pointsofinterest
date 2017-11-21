@@ -1,9 +1,13 @@
 package fr.braddy.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+
 
 @Entity
 public class Point {
@@ -21,9 +25,19 @@ public class Point {
 	
 	private double longitude;
 	
-	private String type;
 	
 	private String description;
+	
+	@ManyToOne(cascade=CascadeType.MERGE)
+	private Categorie categorie;
+
+	public Categorie getCategorie() {
+		return categorie;
+	}
+
+	public void setCategorie(Categorie categorie) {
+		this.categorie = categorie;
+	}
 
 	public String getAddress() {
 		return address;
@@ -49,13 +63,6 @@ public class Point {
 		this.longitude = longitude;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
 
 	public String getDescription() {
 		return description;

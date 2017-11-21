@@ -21,7 +21,5 @@ export class SelectedpointComponent implements OnInit {
     this.service.modifierPoint(this.pointSelected);
   }
 
-  supprimerPoint(id : number) {
-    this.service.supprimerPoint(this.pointSelected.id);
-  }
+
 }

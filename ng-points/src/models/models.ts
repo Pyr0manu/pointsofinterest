@@ -1,9 +1,16 @@
 export interface Point {
-  id: number;
-  name : string;
+  nom : string;
   address: string;
   description?: string;
   latitude : number;
   longitude : number;
-  type: string;
+  categorie : Categorie;
+}
+
+export interface Categorie {
+
+  id: number;
+  nom : string;
+  point : Point;
+
 }

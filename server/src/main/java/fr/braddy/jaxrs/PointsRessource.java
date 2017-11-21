@@ -13,7 +13,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import fr.braddy.EJB.PointsEJB;
+import fr.braddy.EJB.PointsEtCategorieEJB;
+import fr.braddy.models.Categorie;
 import fr.braddy.models.Point;
 
 @Path("points")
@@ -22,24 +23,37 @@ import fr.braddy.models.Point;
 public class PointsRessource {
 	
 	@EJB
-	private PointsEJB pointEJB;
+	private PointsEtCategorieEJB pointsEtCategorieEJB;
 	
-//	@GET
-//    public Point testPoint(){return pointEJB.creerPointTest();}
+	@GET
+	@Path("init")
+	public String testPoint(){
+		String[] tab = {"restaurants", "musées", "points de vue","monuments historique", "Oeuvres d'art" };
+		pointsEtCategorieEJB.creerCategorie(tab);
+		pointsEtCategorieEJB.creerPointTest(10);
+		return "init ok";
+		
+	}
+	
+	@GET
+	@Path("categories")
+	public List<Categorie> afficherListCategorie (){
+		return pointsEtCategorieEJB.findAllCategorie();
+	}
 	
 	@GET
 	public List<Point> afficherListPoint(){
-		return pointEJB.findAllPoint();
+		return pointsEtCategorieEJB.findAllPoint();
 	}
 	
 	@POST
 	public Point creationPoint(Point point){
-		return pointEJB.ajouterPoint(point);
+		return pointsEtCategorieEJB.ajouterPoint(point);
 	}
 	
 	@PUT
 	public Point modifierPoint(Point point){
-		return pointEJB.modifierPoint(point);
+		return pointsEtCategorieEJB.modifierPoint(point);
 		
 	}
 
@@ -47,7 +61,7 @@ public class PointsRessource {
 	@Path("{id}")
 	public void supprimerPoint (@PathParam("id") int id) {
 		System.out.println(id);
-		pointEJB.supprimerPoint(id);
+		pointsEtCategorieEJB.supprimerPoint(id);
 	}
 	
 

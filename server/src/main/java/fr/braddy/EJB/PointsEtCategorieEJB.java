@@ -9,29 +9,47 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import fr.braddy.models.Categorie;
 import fr.braddy.models.Point;
 
 
 
 
 @Stateless
-public class PointsEJB {
+public class PointsEtCategorieEJB {
 	
 	@PersistenceContext
 	EntityManager em;
 	
-	public Point  creerPointTest() {
+	
+	public void  creerCategorie(String[] tab) {
+		for(String current : tab){
+			Categorie categorie = new Categorie();
+			categorie.setNom(current);
+			em.persist(categorie);
+		}
+		
+	}
+	
+	public List<Categorie> findAllCategorie() {
+		TypedQuery<Categorie> query = em.createQuery("from " + Categorie.class.getSimpleName(), Categorie.class);
+		System.out.println(query.getResultList().size());
+		return query.getResultList();
+
+	}
+	
+	public void creerPointTest(int number) {
+		for(int i =0 ; i < number ; i++){
 		Point point = new Point();
 		point.setNom("testJaxrs");
 		point.setAddress("testJaxrs");
-		point.setDescription("testJaxrs");
-		point.setType("testJaxrs");
 		point.setLatitude(123456789);
 		point.setLongitude(123456789);
 		em.persist(point);
-		return point;
+		}
 	
 	}
+	
 	
 	public Point ajouterPoint(Point point) {
 		em.persist(point);

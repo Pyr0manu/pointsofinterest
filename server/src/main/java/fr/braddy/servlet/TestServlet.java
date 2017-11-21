@@ -9,17 +9,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.braddy.EJB.PointsEJB;
+
+import fr.braddy.EJB.PointsEtCategorieEJB;
 
 @WebServlet("/test")
 public class TestServlet extends HttpServlet{
 	
 	@EJB
-	private PointsEJB pointEJB;
+	private PointsEtCategorieEJB pointsEtCategorieEJB;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		pointEJB.creerPointTest();
+		pointsEtCategorieEJB.creerPointTest(1);
 		resp.getOutputStream().print("yo");
 	}
 
