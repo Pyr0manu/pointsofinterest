@@ -64,3 +64,4 @@ function initAutocomplete() {
     map.fitBounds(bounds);
   });
 }
+  google.maps.event.addDomListener(window,"load", initAutocomplete);
