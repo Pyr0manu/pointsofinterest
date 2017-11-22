@@ -1,4 +1,8 @@
 function initAutocomplete() {
+
+
+
+
   var map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: -33.8688, lng: 151.2195},
     zoom: 13,
@@ -64,4 +68,4 @@ function initAutocomplete() {
     map.fitBounds(bounds);
   });
 }
-  google.maps.event.addDomListener(window,"load", initAutocomplete);
+ // google.maps.event.addDomListener(window,"load", initAutocomplete);
