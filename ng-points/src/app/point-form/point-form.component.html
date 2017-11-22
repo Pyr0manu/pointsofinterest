@@ -2,8 +2,8 @@
   <label>Name : <input type="text" [(ngModel)] = "point.nom" name="name" minlength="3"></label>
   <br/>
   <label>Categorie :
-    <select [(ngModel)] = "point.categorie" >
-      <option *ngFor="let categorie of getCategories()" [value]="categorie">{{categorie.nom}}</option>
+    <select [(ngModel)] = "point.categorie"  name="categorie">
+      <option *ngFor="let categorie of getCategories()" [ngValue]="categorie">{{categorie.nom}}</option>
     </select>
   </label>
   <br/>

@@ -60,6 +60,10 @@ public class PointsEtCategorieEJB {
 	public Point modifierPoint(Point point) {
 		return em.merge(point);
 	}
+
+	public Point trouverPoint(int id) {
+		return em.find(Point.class, id);
+	}
 	
 	public void supprimerPoint(int id) {
 		em.remove(em.find(Point.class, id));

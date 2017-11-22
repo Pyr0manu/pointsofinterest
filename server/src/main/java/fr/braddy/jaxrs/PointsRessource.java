@@ -48,6 +48,8 @@ public class PointsRessource {
 	
 	@POST
 	public Point creationPoint(Point point){
+
+
 		return pointsEtCategorieEJB.ajouterPoint(point);
 	}
 	

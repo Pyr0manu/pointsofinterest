@@ -9,13 +9,14 @@
   </tr>
 
 
-  <tr  *ngFor="let point of getPoints(); let e=even; let o=odd"  [ngClass]="{odd:o, even:e}">
+  <tr  *ngFor="let point of getPoints(); let i = index; let e=even; let o=odd" [attr.data-index]="i"  [ngClass]="{odd:o, even:e}">
     <td>      {{point.nom}}</td>
-    <td>      {{point.categorie}}</td>
+    <td>      {{point.categorie?.nom}}</td>
     <td>      {{point.latitude}}</td>
     <td>      {{point.longitude}}</td>
     <td>      {{point.address}}</td>
     <td>      {{point.description}}</td>
+    <td>      <app-selectedpoint [pointSelected]="point" (eventEmitterSelectedPoint)="updateListRevome(i)"></app-selectedpoint></td>
   </tr>
 
 

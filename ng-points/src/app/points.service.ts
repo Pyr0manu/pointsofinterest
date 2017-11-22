@@ -27,7 +27,7 @@ export class PointsService {
   }
 
   supprimerPoint(id : number) {
-  return this.http.delete('http://localhost:8080/poi/api/points/'+id,id);
+  return this.http.delete('http://localhost:8080/poi/api/points/'+id);
 }
 
 

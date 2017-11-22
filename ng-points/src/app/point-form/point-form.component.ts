@@ -26,8 +26,7 @@ export class PointFormComponent implements OnInit {
         address: "",
         description: "",
         latitude : 0,
-        longitude : 0,
-        categorie: null
+        longitude : 0
     };
   }
 
@@ -38,6 +37,9 @@ export class PointFormComponent implements OnInit {
       this.point.nom="";
       this.point.address="";
       this.point.description="";
+      this.point.categorie=null;
+      this.point.latitude=0;
+      this.point.longitude=0;
      })
   }
 

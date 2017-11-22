@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Point} from "../../models/models";
 import {PointsService} from "../points.service";
 
@@ -9,7 +9,8 @@ import {PointsService} from "../points.service";
 })
 export class SelectedpointComponent implements OnInit {
 
-   @Input() pointSelected:Point;
+  @Input() pointSelected:Point;
+  @Output() eventEmitterSelectedPoint: EventEmitter<Point> = new EventEmitter();
 
   constructor(public service:PointsService) { }
 
@@ -20,6 +21,8 @@ export class SelectedpointComponent implements OnInit {
   modifierPoint(){
     this.service.modifierPoint(this.pointSelected);
   }
-
+  supprimerPoint(id : number){
+    this.service.supprimerPoint(id).subscribe();
+  }
 
 }

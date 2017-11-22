@@ -27,4 +27,8 @@ export class PointsComponent implements OnInit {
   updateList(point:Point){
     this.points.push(point)
   }
+
+  updateListRevome(index : number){
+    this.points.splice(index, 1)
+  }
 }
