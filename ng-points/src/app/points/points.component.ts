@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
 import {PointsService} from "../points.service";
 import {Point} from "../../models/models";
 
@@ -13,12 +13,14 @@ export class PointsComponent implements OnInit {
   points:Point[] = [];
 
   ngOnInit() {
+    this.pointsService.getPoints().subscribe(points => {
+      this.points = points; });
   }
 
   constructor(public pointsService : PointsService){
-    this.pointsService.getPoints().subscribe(points => this.points = points);
-
   };
+
+
 
   getPoints():Point[]{
     return this.points;
