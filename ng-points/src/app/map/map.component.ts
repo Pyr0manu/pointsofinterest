@@ -18,9 +18,7 @@ export class MapComponent implements OnInit {
   map:any;
   @Input() pointsFromPointsComponent:Point[]=[];
 
-  constructor(public wrapper:WrapperService, public element:ElementRef, public service:PointsService) {
-
-    //this.service.getPoints().subscribe(points => this.points = points);
+  constructor(public element:ElementRef, public service:PointsService) {
   }
 
   ngOnInit() {
