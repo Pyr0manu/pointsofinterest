@@ -1,6 +1,7 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, SimpleChange, SimpleChanges, ViewChild} from '@angular/core';
 import {WrapperService} from "../services/wrapper.service";
 import {Point} from "../../models/models";
+import {PointsService} from "../points.service";
 
 declare const google:any;
 
@@ -13,57 +14,58 @@ declare const google:any;
 
 export class MapComponent implements OnInit {
 
-  nativeMapElement
+  nativeMapElement:any;
+  map:any;
+  @Input() pointsFromPointsComponent:Point[]=[];
 
+  constructor(public wrapper:WrapperService, public element:ElementRef, public service:PointsService) {
 
-  constructor(public wrapper:WrapperService, public element:ElementRef) {}
+    //this.service.getPoints().subscribe(points => this.points = points);
+  }
 
   ngOnInit() {
     this.nativeMapElement=this.element.nativeElement.querySelector('div#map');
-    this.initMap();
+    this.initMap()
+  }
+
+  ngOnChanges() {
+   this.addPoints();
   }
 
   initMap(){
-    var map = new google.maps.Map(this.nativeMapElement, {
-      center: {lat: -33.8688, lng: 151.2195},
+    this.map = new google.maps.Map(this.nativeMapElement, {
+      center: {lat: 36.746828, lng: 3.035181},
       zoom: 13,
       mapTypeId: 'roadmap'
     });
-
+    console.log("tu as créé la carte you BMF !")
+    console.log("voici les points: "+this.pointsFromPointsComponent)
   }
 
-  // addPoints(){
-  //   //on parcourt la liste de points et on ajoute les points à la carte
-  //
-  //   var points = [
-  //     [36.746828, 3.035181,
-  //       'ALGERIA'],
-  //     [12.36308, -1.546587,
-  //       'BURKINA FASO']
-  //   ];
-  //
-  //
-  //   // for(let point of points){
-  //   //   var myLatLng = new google.maps.LatLng(point[0], point[1]);
-  //   //   var marker = new google.maps.Marker({
-  //   //     position: myLatLng,
-  //   //     map: this.map,
-  //   //     clickable: true,
-  //   //     animation: google.maps.Animation.DROP, /* animation : le point est déposé sur la carte */
-  //   //     descriptionLabo: point[2], /* description qui sera affichée lorsqu'on clique sur le point */
-  //   //   });
-  //   //   google.maps.event.addListener(marker, 'click', function () {
-  //   //     /* Ajoute l'info-bulle sur le point lorsqu'on clique dessus */
-  //   //     var infobulle = new google.maps.InfoWindow({
-  //   //       content: this.descriptionLabo
-  //   //     });
-  //   //     infobulle.open(this.map, this);
-  //   //   });
-  //   //
-  //   //
-  //   // }
-  //
-  //
-  //
-  // }
+  addPoints(){
+    //on parcourt la liste de points et on ajoute les points à la carte
+
+    for(let point of this.pointsFromPointsComponent){
+      console.log("voici le nom du point à sa creation : "+point.nom)
+      var myLatLng = new google.maps.LatLng(point.latitude, point.longitude);
+      var marker = new google.maps.Marker({
+        position: myLatLng,
+        map: this.map,
+        clickable: true,
+        animation: google.maps.Animation.DROP, /* animation : le point est déposé sur la carte */
+        descriptionLabo: point.nom, /* description qui sera affichée lorsqu'on clique sur le point */
+      });
+      google.maps.event.addListener(marker, 'click', function () {
+        /* Ajoute l'info-bulle sur le point lorsqu'on clique dessus */
+        var infobulle = new google.maps.InfoWindow({
+          content: this.descriptionLabo
+        });
+        infobulle.open(this.map, this);
+      });
+
+    }
+
+
+
+  }
 }

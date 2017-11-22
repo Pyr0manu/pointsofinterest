@@ -13,12 +13,14 @@ export class PointsComponent implements OnInit {
   points:Point[] = [];
 
   ngOnInit() {
+    this.pointsService.getPoints().subscribe(points => {
+      this.points = points; });
   }
 
   constructor(public pointsService : PointsService){
-    this.pointsService.getPoints().subscribe(points => this.points = points);
-
   };
+
+
 
   getPoints():Point[]{
     return this.points;
