@@ -10,14 +10,10 @@
 (Si le dossier node_modules n'est pas présent, taper "npm install" puis "ng serve") 
 
 
-### 2. Mettre des points dans la base de données "projetfinal"
+### 2. Mettre des points et des categories dans la base de données "projetfinal"
 
-Dans server/src/main/java/fr.braddy/jaxrs/PointsRessourcs
-
-Décommenter la méthode GET testPoint
-Commenter la méthode GET  afficherListPoint
-
-Aller sur l'URL : http://localhost:8080/poi/api/points
+-Si mise à jour du projet, allez dans mySQL supprimer les tables et relancer wildfly pour avoir toutes les contraintes à jour entre les tables.
+-Aller sur l'URL : http://localhost:8080/poi/api/points/init          "init ok" devra s'afficher
 
 Ne pas oublier de Recommenter de décommenter les méthodes nécessaires
 
