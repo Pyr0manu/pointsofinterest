@@ -24,11 +24,19 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.nativeMapElement=this.element.nativeElement.querySelector('div#map');
-    this.initMap()
+
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    this.nativeMapElement=this.element.nativeElement.querySelector('div#map');
+    if(this.nativeMapElement!=null){
+
+    this.initMap()
+
+    }
+
+
+
    console.log("changement !", this.pointsFromPointsComponent);
    if (this.map!=null){
      this.initMap()
