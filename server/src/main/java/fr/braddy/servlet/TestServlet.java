@@ -20,7 +20,8 @@ public class TestServlet extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		pointsEtCategorieEJB.creerPointTest(1);
+		double [][] table = {{43.566810, 1.466468}};
+		pointsEtCategorieEJB.creerPointTest(table);
 		resp.getOutputStream().print("yo");
 	}
 

@@ -1,10 +1,8 @@
 import {Component, ElementRef, Input, OnInit, SimpleChange, SimpleChanges, ViewChild} from '@angular/core';
-import {WrapperService} from "../services/wrapper.service";
 import {Point} from "../../models/models";
 import {PointsService} from "../points.service";
 
 declare const google:any;
-
 
 @Component({
   selector: 'app-map',
@@ -14,6 +12,8 @@ declare const google:any;
 
 export class MapComponent implements OnInit {
 
+  nativeSearchBoxElement:any;
+  searchBox:any;
   nativeMapElement:any;
   map:any;
   @Input() pointsFromPointsComponent:Point[]=[];
@@ -22,8 +22,10 @@ export class MapComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.nativeMapElement=this.element.nativeElement.querySelector('div#map');
-    this.initMap()
+    this.nativeSearchBoxElement = this.element.nativeElement.querySelector('input#pac-input');
+    this.nativeMapElement = this.element.nativeElement.querySelector('div#map');
+    this.initMap();
+    this.initSearchBox();
   }
 
   ngOnChanges() {
@@ -32,9 +34,9 @@ export class MapComponent implements OnInit {
 
   initMap(){
     this.map = new google.maps.Map(this.nativeMapElement, {
-      center: {lat: 36.746828, lng: 3.035181},
-      zoom: 13,
-      mapTypeId: 'roadmap'
+      center: {lat: 46.967889, lng: 2.419104},
+      zoom: 5,
+      mapTypeId: 'satellite'
     });
     console.log("tu as créé la carte you BMF !")
     console.log("voici les points: "+this.pointsFromPointsComponent)
@@ -44,7 +46,6 @@ export class MapComponent implements OnInit {
     //on parcourt la liste de points et on ajoute les points à la carte
 
     for(let point of this.pointsFromPointsComponent){
-      console.log("voici le nom du point à sa creation : "+point.nom)
       var myLatLng = new google.maps.LatLng(point.latitude, point.longitude);
       var marker = new google.maps.Marker({
         position: myLatLng,
@@ -52,6 +53,7 @@ export class MapComponent implements OnInit {
         clickable: true,
         animation: google.maps.Animation.DROP, /* animation : le point est déposé sur la carte */
         descriptionLabo: point.nom, /* description qui sera affichée lorsqu'on clique sur le point */
+        setMap: this.map
       });
       google.maps.event.addListener(marker, 'click', function () {
         /* Ajoute l'info-bulle sur le point lorsqu'on clique dessus */
@@ -60,10 +62,65 @@ export class MapComponent implements OnInit {
         });
         infobulle.open(this.map, this);
       });
-
     }
+  }
 
+  initSearchBox(){
+    // Create the search box and link it to the UI element.
+    this.searchBox = new google.maps.places.SearchBox(this.nativeSearchBoxElement);
+    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(this.nativeSearchBoxElement);
+    // // Bias the SearchBox results towards current map's viewport.
+    // this.map.addListener('bounds_changed', function() {
+    //   this.searchBox.setBounds(this.map.getBounds());
+    // });
+    var markers = [];
+    // Listen for the event fired when the user selects a prediction and retrieve
+    // more details for that place.
+    this.searchBox.addListener('places_changed', function() {
+      var places = this.searchBox.getPlaces();
+      if (places.length == 0) {
+        return;
+      }
+      // Clear out the old markers.
+      markers.forEach(function(marker) {
+        marker.setMap(null);
+      });
+      markers = [];
+      // For each place, get the icon, name and location.
+      var bounds = new google.maps.LatLngBounds();
+      places.forEach(function(place) {
+        if (!place.geometry) {
+          console.log("Returned place contains no geometry");
+          return;
+        }
+        var icon = {
+          url: place.icon,
+          size: new google.maps.Size(71, 71),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(17, 34),
+          scaledSize: new google.maps.Size(25, 25)
+        };
 
+        // Create a marker for each place.
+        markers.push(new google.maps.Marker({
+          map: this.map,
+          icon: icon,
+          title: place.name,
+          position: place.geometry.location
+        }));
 
+        if (place.geometry.viewport) {
+          // Only geocodes have viewport.
+          bounds.union(place.geometry.viewport);
+        } else {
+          bounds.extend(place.geometry.location);
+        }
+      });
+      this.map.fitBounds(bounds);
+    });
   }
 }
+
+
+
+
