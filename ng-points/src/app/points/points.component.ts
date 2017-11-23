@@ -28,7 +28,7 @@ export class PointsComponent implements OnInit {
     this.points.push(point)
   }
 
-  updateListRevome(index : number){
-    this.points.splice(index, 1)
+  updateListRemove(point : Point){
+    this.points = this.points.filter(p => p!==point );
   }
 }

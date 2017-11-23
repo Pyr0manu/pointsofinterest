@@ -10,11 +10,10 @@ import {PointsService} from "../points.service";
 })
 export class PointFormComponent implements OnInit {
   point:Point;
-  copy:Point;
   categories :Categorie[] = [];
 
 
-  @Output() eventEmitter: EventEmitter<Point> = new EventEmitter();
+  @Output() createPointEvent: EventEmitter<Point> = new EventEmitter();
 
   constructor(public service:PointsService) {
     this.service.getCategorie().subscribe(categories => this.categories = categories);
@@ -31,9 +30,9 @@ export class PointFormComponent implements OnInit {
   }
 
   createPoint(){
-    this.copy= {...this.point}
-    this.service.createPoint(this.point).subscribe(()=> {
-      this.eventEmitter.emit(this.copy)
+
+    this.service.createPoint(this.point).subscribe((point)=> {
+      this.createPointEvent.emit(point);
       this.point.nom="";
       this.point.address="";
       this.point.description="";

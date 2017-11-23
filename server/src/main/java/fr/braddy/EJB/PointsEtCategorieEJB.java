@@ -7,10 +7,12 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import fr.braddy.models.Categorie;
 import fr.braddy.models.Point;
+
 
 
 
@@ -68,6 +70,7 @@ public class PointsEtCategorieEJB {
 	public void supprimerPoint(int id) {
 		em.remove(em.find(Point.class, id));
 	}
+
 	
 	public List<Point> findAllPoint() {
 		TypedQuery<Point> query = em.createQuery("from " + Point.class.getSimpleName(), Point.class);

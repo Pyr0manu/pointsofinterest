@@ -62,9 +62,9 @@ public class PointsRessource {
 	@DELETE
 	@Path("{id}")
 	public void supprimerPoint (@PathParam("id") int id) {
-		System.out.println(id);
 		pointsEtCategorieEJB.supprimerPoint(id);
 	}
-	
+
+
 
 }

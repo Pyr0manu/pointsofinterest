@@ -18,8 +18,8 @@ export class PointsService {
     return this.http.get('http://localhost:8080/poi/api/points/categories').map(response =>response.json());
   }
 
-  createPoint(point:Point){
-    return this.http.post('http://localhost:8080/poi/api/points',point);
+  createPoint(point:Point):Observable<Point>{
+    return this.http.post('http://localhost:8080/poi/api/points',point).map(response =>response.json());
   }
 
   modifierPoint(point:Point){
@@ -29,6 +29,7 @@ export class PointsService {
   supprimerPoint(id : number) {
   return this.http.delete('http://localhost:8080/poi/api/points/'+id);
 }
+
 
 
 }

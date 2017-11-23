@@ -10,7 +10,7 @@ import {PointsService} from "../points.service";
 export class SelectedpointComponent implements OnInit {
 
   @Input() pointSelected:Point;
-  @Output() eventEmitterSelectedPoint: EventEmitter<Point> = new EventEmitter();
+  @Output() removePoint: EventEmitter<Point> = new EventEmitter();
 
   constructor(public service:PointsService) { }
 
@@ -21,8 +21,9 @@ export class SelectedpointComponent implements OnInit {
   modifierPoint(){
     this.service.modifierPoint(this.pointSelected);
   }
-  supprimerPoint(id : number){
-    this.service.supprimerPoint(id).subscribe();
+  supprimerPoint(point : Point){
+      this.service.supprimerPoint(point.id).subscribe(()=> this.removePoint.emit(point));
+
   }
 
 }
