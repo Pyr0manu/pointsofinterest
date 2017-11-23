@@ -10,13 +10,14 @@ declare const google:any;
   styleUrls: ['./map.component.css']
 })
 
-export class MapComponent implements OnInit, OnChanges{
-
+export class MapComponent implements OnInit, OnChanges {
   nativeSearchBoxElement:any;
   searchBox:any;
   nativeMapElement:any;
   map:any;
   @Input() pointsFromPointsComponent:Point[]=[];
+  markers;
+  myLatLngs;
 
   constructor(public element:ElementRef, public service:PointsService) {
   }
@@ -28,9 +29,17 @@ export class MapComponent implements OnInit, OnChanges{
     this.initSearchBox();
   }
 
-  ngOnChanges() {
-    this.addPoints();
+  ngOnChanges(changes: SimpleChanges) {
+    this.nativeMapElement = this.element.nativeElement.querySelector('div#map');
+    if (this.nativeMapElement != null) {
+      this.initMap();
+    }
+    if (this.map!=null){
+      this.initMap()
+    }
+    this.addPoints(this.pointsFromPointsComponent);
   }
+
 
   initMap(){
     this.map = new google.maps.Map(this.nativeMapElement, {
@@ -38,24 +47,26 @@ export class MapComponent implements OnInit, OnChanges{
       zoom: 5,
       mapTypeId: 'satellite'
     });
-    console.log("tu as créé la carte you BMF !")
-    console.log("voici les points: "+this.pointsFromPointsComponent)
   }
 
-  addPoints(){
+  addPoints(points:Point[]){
     //on parcourt la liste de points et on ajoute les points à la carte
+    this.markers = [];
+    //markers.forEach(function(marker){marker.setMap(null)});
+    this.myLatLngs = [];
+    for(let i = 0 ; i<points.length;i++){
+      var point = points[i];
 
-    for(let point of this.pointsFromPointsComponent){
-      var myLatLng = new google.maps.LatLng(point.latitude, point.longitude);
-      var marker = new google.maps.Marker({
-        position: myLatLng,
+      this.myLatLngs[i] = new google.maps.LatLng(point.latitude, point.longitude);
+      this.markers[i] = new google.maps.Marker({
+        position: this.myLatLngs[i],
         map: this.map,
         clickable: true,
         animation: google.maps.Animation.DROP, /* animation : le point est déposé sur la carte */
         descriptionLabo: point.nom, /* description qui sera affichée lorsqu'on clique sur le point */
         setMap: this.map
       });
-      google.maps.event.addListener(marker, 'click', function () {
+      google.maps.event.addListener(this.markers[i], 'click', function () {
         /* Ajoute l'info-bulle sur le point lorsqu'on clique dessus */
         var infobulle = new google.maps.InfoWindow({
           content: this.descriptionLabo
@@ -121,7 +132,3 @@ export class MapComponent implements OnInit, OnChanges{
     }.bind(this));
   }
 }
-
-
-
-
