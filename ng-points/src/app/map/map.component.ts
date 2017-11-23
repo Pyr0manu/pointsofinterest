@@ -1,6 +1,5 @@
 import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChange, SimpleChanges, ViewChild} from '@angular/core';
 import {Point} from "../../models/models";
-import {PointsService} from "../points.service";
 
 declare const google:any;
 
@@ -19,7 +18,7 @@ export class MapComponent implements OnInit, OnChanges {
   markers;
   myLatLngs;
 
-  constructor(public element:ElementRef, public service:PointsService) {
+  constructor(public element:ElementRef) {
   }
 
   ngOnInit() {
@@ -31,15 +30,17 @@ export class MapComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     this.nativeMapElement = this.element.nativeElement.querySelector('div#map');
+    this.nativeSearchBoxElement = this.element.nativeElement.querySelector('input#pac-input');
     if (this.nativeMapElement != null) {
       this.initMap();
+      this.initSearchBox();
     }
     if (this.map!=null){
-      this.initMap()
+      this.initMap();
+      this.initSearchBox();
     }
     this.addPoints(this.pointsFromPointsComponent);
   }
-
 
   initMap(){
     this.map = new google.maps.Map(this.nativeMapElement, {
