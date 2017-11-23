@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, SimpleChange, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChange, SimpleChanges, ViewChild} from '@angular/core';
 import {Point} from "../../models/models";
 import {PointsService} from "../points.service";
 
@@ -10,7 +10,7 @@ declare const google:any;
   styleUrls: ['./map.component.css']
 })
 
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, OnChanges{
 
   nativeSearchBoxElement:any;
   searchBox:any;
@@ -29,7 +29,7 @@ export class MapComponent implements OnInit {
   }
 
   ngOnChanges() {
-   this.addPoints();
+    this.addPoints();
   }
 
   initMap(){
@@ -69,10 +69,11 @@ export class MapComponent implements OnInit {
     // Create the search box and link it to the UI element.
     this.searchBox = new google.maps.places.SearchBox(this.nativeSearchBoxElement);
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(this.nativeSearchBoxElement);
-    // // Bias the SearchBox results towards current map's viewport.
-    // this.map.addListener('bounds_changed', function() {
-    //   this.searchBox.setBounds(this.map.getBounds());
-    // });
+    // Bias the SearchBox results towards current map's viewport.
+    this.map.addListener('bounds_changed', function() {
+     // debugger;
+      this.searchBox.setBounds(this.map.getBounds());
+    }.bind(this)  );
     var markers = [];
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
@@ -115,9 +116,9 @@ export class MapComponent implements OnInit {
         } else {
           bounds.extend(place.geometry.location);
         }
-      });
+      }.bind(this));
       this.map.fitBounds(bounds);
-    });
+    }.bind(this));
   }
 }
 
