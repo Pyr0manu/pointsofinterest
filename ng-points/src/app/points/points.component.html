@@ -5,7 +5,18 @@
 <table id="poiTable">
 
   <tr>
-    <td>NAME</td><td>CATEGORIE</td><td>LATITUDE</td><td>LONGITUDE</td><td>ADDRESS</td><td>DESCRIPTION</td>
+    <td>NAME</td>
+    <td>CATEGORIE</td>
+    <td>LATITUDE</td>
+    <td>LONGITUDE</td>
+    <td>ADDRESS</td>
+    <td>DESCRIPTION</td>
+      <form name="filter-form" #filterForm="ngForm">
+
+    <td><label>Mot(s) clef : <input type="text" [(ngModel)] = "filter" name="filter"></label></td>
+    <td><button type="button" (click) = "filterPoint()">filtrer</button></td>
+
+      </form>
   </tr>
 
 

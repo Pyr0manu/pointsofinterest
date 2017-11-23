@@ -17,6 +17,7 @@ import fr.braddy.models.Point;
 
 
 
+
 @Stateless
 public class PointsEtCategorieEJB {
 	
@@ -54,8 +55,27 @@ public class PointsEtCategorieEJB {
 	
 	
 	public Point ajouterPoint(Point point) {
-		em.persist(point);
-		return point;
+		Query query = em.createQuery("SELECT p FROM Point p WHERE p.nom LIKE :nom AND p.longitude LIKE :long AND p.latitude LIKE :lat", Point.class)
+				 .setParameter("nom", point.getNom())
+				 .setParameter("long", point.getLongitude())
+		 		.setParameter("lat", point.getLatitude());
+
+		Point pointExistant = new Point();
+		try {
+			pointExistant = (Point)query.getSingleResult();
+		} catch (Exception e) {
+			pointExistant=null;
+		}
+		
+		if(pointExistant==null){
+			em.persist(point);
+			return point;
+			
+		}else{
+
+			return null;
+		}
+		
 		
 	}
 	

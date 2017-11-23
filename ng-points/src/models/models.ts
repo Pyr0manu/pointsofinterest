@@ -1,10 +1,10 @@
 export interface Point {
   id?:number;
   nom : string;
-  address: string;
+  address?: string;
   description?: string;
-  latitude : number;
-  longitude : number;
+  latitude ?: number;
+  longitude ?: number;
   categorie ?: Categorie;
 }
 

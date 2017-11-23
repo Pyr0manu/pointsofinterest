@@ -11,6 +11,7 @@ export class PointsComponent implements OnInit {
 
 
   points:Point[] = [];
+  motClef: string;
 
   ngOnInit() {
     this.pointsService.getPoints().subscribe(points => {
@@ -18,7 +19,7 @@ export class PointsComponent implements OnInit {
   }
 
   constructor(public pointsService : PointsService){
-  };
+  }
 
 
 
