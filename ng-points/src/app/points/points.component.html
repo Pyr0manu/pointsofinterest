@@ -2,7 +2,7 @@
 <app-point-form (createPointEvent)="updateList($event)"> </app-point-form>
 <h3>List of Points of Interest</h3>
 
-<table>
+<table id="poiTable">
 
   <tr>
     <td>NAME</td><td>CATEGORIE</td><td>LATITUDE</td><td>LONGITUDE</td><td>ADDRESS</td><td>DESCRIPTION</td>
@@ -22,4 +22,6 @@
 
 
 </table>
+
+<app-map [pointsFromPointsComponent]="getPoints()"></app-map>
 
