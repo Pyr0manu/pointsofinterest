@@ -1,3 +1,4 @@
+<h3>Add the POI : ({{point.latitude}},{{point.longitude}})</h3>
 <form name="point-form" #pointForm="ngForm">
   <table>
     <tr>
@@ -21,16 +22,12 @@
         <label>Address : <input type="text" [(ngModel)] = "point.address" name="address" minlength="5"></label>
       </td>
       <td>
-        <label>Latitude : <input type="number" (click) = "setPoint()" [(ngModel)] = "point.latitude" name="latitude"></label>
+        <label>Latitude : <input type="number" [(ngModel)] = "point.latitude" name="latitude"></label>
       </td>
       <td>
-        <label>Longitude : <input type="number" (click) = "setPoint()" [(ngModel)] = "point.longitude" name="longitude"></label>
+        <label>Longitude : <input type="number" [(ngModel)] = "point.longitude" name="longitude"></label>
       </td>
     </tr>
   </table>
-
   <button type="button" [disabled]="!pointForm.form.valid" (click) = "createPoint()">Add point</button>
-
 </form>
-
-

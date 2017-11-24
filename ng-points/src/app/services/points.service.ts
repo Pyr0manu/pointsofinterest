@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs/Observable";
-import {Categorie, Point} from "../models/models";
+import {Categorie, Point} from "../../models/models";
 import {Http} from "@angular/http";
 import "rxjs/add/operator/map"
 
@@ -10,23 +10,21 @@ export class PointsService {
   pointMap:Point;
 
   constructor(public http:Http) {
-    this.pointMap=  {
-      nom : "",
+    this.pointMap = {
+      nom: "",
       address: "",
       description: "",
-      latitude:0,
-      longitude : 0
+      latitude: 0,
+      longitude: 0
     };
-
   }
-
-  getpointMap(){
+  getPointMap(){
     return this.pointMap;
   }
 
-  setpointMap(lat:number, lon: number) {
-    this.pointMap.latitude=lat;
-    this.pointMap.longitude=lon;
+  setPointMap(latitude:number, longitude:number){
+    this.pointMap.latitude = latitude;
+    this.pointMap.longitude = longitude;
   }
 
   getPoints():Observable<Point[]>{
@@ -41,11 +39,11 @@ export class PointsService {
     return this.http.post('http://localhost:8080/poi/api/points',point).map(response =>response.json());
   }
 
-  modifierPoint(point:Point){
+  updatePoint(point:Point){
   return this.http.put('http://localhost:8080/poi/api/points',point);
   }
 
-  supprimerPoint(id : number) {
+  deletePoint(id : number) {
   return this.http.delete('http://localhost:8080/poi/api/points/'+id);
 }
 

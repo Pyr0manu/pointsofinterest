@@ -1,7 +1,6 @@
 import {Component, EventEmitter, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Categorie, Point} from "../../models/models";
-import {PointsService} from "../points.service";
-
+import {PointsService} from "../services/points.service";
 
 @Component({
   selector: 'app-point-form',
@@ -11,10 +10,7 @@ import {PointsService} from "../points.service";
 export class PointFormComponent implements OnInit{
   point:Point;
   categories :Categorie[] = [];
-
-
   @Output() createPointEvent: EventEmitter<Point> = new EventEmitter();
-
 
   constructor(public service:PointsService) {
     this.service.getCategorie().subscribe(categories => this.categories = categories);
@@ -25,17 +21,14 @@ export class PointFormComponent implements OnInit{
       nom : "",
       address: "",
       description: "",
-      latitude:this.service.getpointMap().latitude,
-      longitude :this.service.getpointMap().longitude
+      latitude:this.service.getPointMap().latitude,
+      longitude :this.service.getPointMap().longitude
     };
   }
 
-
-
   setPoint() {
-    this.point.longitude= this.service.getpointMap().longitude
-    this.point.latitude= this.service.getpointMap().latitude
-
+    this.point.longitude= this.service.getPointMap().longitude
+    this.point.latitude= this.service.getPointMap().latitude
   }
 
   createPoint(){
@@ -46,14 +39,13 @@ export class PointFormComponent implements OnInit{
       this.point.address="";
       this.point.description="";
       this.point.categorie=null;
-      this.point.latitude=this.service.getpointMap().latitude;
-      this.point.longitude=this.service.getpointMap().longitude;
+      this.point.latitude=this.service.getPointMap().latitude;
+      this.point.longitude=this.service.getPointMap().longitude;
      })
   }
 
   getCategories():Categorie[]{
     return this.categories;
   }
-
 
 }

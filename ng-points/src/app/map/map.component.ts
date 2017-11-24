@@ -3,7 +3,7 @@ import {
   ViewChild
 } from '@angular/core';
 import {Point} from "../../models/models";
-import {PointsService} from "../points.service";
+import {PointsService} from "../services/points.service";
 
 declare const google:any;
 
@@ -20,18 +20,9 @@ export class MapComponent implements OnInit, OnChanges {
   map:any;
   @Input() pointsFromPointsComponent:Point[]=[];
   @Output() updatePointMap: EventEmitter<Point> = new EventEmitter();
-  markers;
-  myLatLngs;
   point : Point
 
-  constructor(public element:ElementRef , public mapService : PointsService, private zone:NgZone) {
-    this.point=  {
-      nom : "",
-      address: "",
-      description: "",
-      latitude:0,
-      longitude : 0
-    };
+  constructor(public element:ElementRef, public pointService:PointsService, private zone:NgZone) {
   }
 
   ngOnInit() {
@@ -63,38 +54,32 @@ export class MapComponent implements OnInit, OnChanges {
     });
 
     google.maps.event.addListener(this.map, "click", (event)=> {
-      console.log(event.latLng.lat(), event.latLng.lng());
-      console.log(this.mapService);
       this.updatePointMapZone(event.latLng.lat(),event.latLng.lng());
     });
   }
 
   updatePointMapZone(latitude:number, longitude:number){
     this.zone.run(()=>{
-      this.mapService.setpointMap(latitude, longitude)
+      this.pointService.setPointMap(latitude, longitude)
       this.updatePointMap.emit()
     })
   }
 
-
   addPoints(points:Point[]){
     //on parcourt la liste de points et on ajoute les points à la carte
-    this.markers = [];
-    //markers.forEach(function(marker){marker.setMap(null)});
-    this.myLatLngs = [];
-    for(let i = 0 ; i<points.length;i++){
-      var point = points[i];
 
-      this.myLatLngs[i] = new google.maps.LatLng(point.latitude, point.longitude);
-      this.markers[i] = new google.maps.Marker({
-        position: this.myLatLngs[i],
+    for(let point of points){
+
+      var myCoordinate = new google.maps.LatLng(point.latitude, point.longitude);
+      var marker = new google.maps.Marker({
+        position: myCoordinate,
         map: this.map,
         clickable: true,
         animation: google.maps.Animation.DROP, /* animation : le point est déposé sur la carte */
         descriptionLabo: point.nom, /* description qui sera affichée lorsqu'on clique sur le point */
         setMap: this.map
       });
-      google.maps.event.addListener(this.markers[i], 'click', function () {
+      google.maps.event.addListener(marker, 'click', function () {
         /* Ajoute l'info-bulle sur le point lorsqu'on clique dessus */
         var infobulle = new google.maps.InfoWindow({
           content: this.descriptionLabo

@@ -1,5 +1,5 @@
 import {Component, OnInit, Output, ViewChild} from '@angular/core';
-import {PointsService} from "../points.service";
+import {PointsService} from "../services/points.service";
 import {Point} from "../../models/models";
 import {MapComponent} from "../map/map.component";
 import {PointFormComponent} from "../point-form/point-form.component";
@@ -10,12 +10,12 @@ import {SelectedpointComponent} from "../selectedpoint/selectedpoint.component";
   templateUrl: './points.component.html',
   styleUrls: ['./points.component.css']
 })
+
 export class PointsComponent implements OnInit {
 
   points:Point[] = [];
   @ViewChild(MapComponent) map:MapComponent;
   @ViewChild(PointFormComponent) pointForm:PointFormComponent
-
 
   ngOnInit() {
     this.pointsService.getPoints().subscribe(points => {

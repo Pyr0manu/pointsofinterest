@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Point} from "../../models/models";
-import {PointsService} from "../points.service";
+import {PointsService} from "../services/points.service";
 
 @Component({
   selector: 'app-selectedpoint',
@@ -17,13 +17,11 @@ export class SelectedpointComponent implements OnInit {
   ngOnInit() {
   }
 
-
-  modifierPoint(){
-    this.service.modifierPoint(this.pointSelected);
+  updatePoint(){
+    this.service.updatePoint(this.pointSelected);
   }
-  supprimerPoint(point : Point){
-      this.service.supprimerPoint(point.id).subscribe(()=> this.removePoint.emit(point));
-
+  deletePoint(point : Point){
+      this.service.deletePoint(point.id).subscribe(()=> this.removePoint.emit(point));
   }
 
 }

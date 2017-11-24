@@ -1,11 +1,9 @@
-
-<app-point-form  (createPointEvent)="updateList($event)"> </app-point-form>
 <h3>List of Points of Interest</h3>
 
-<table id="poiTable">
+  <table>
 
   <tr>
-    <td>NAME</td><td>CATEGORIE</td><td>LATITUDE</td><td>LONGITUDE</td><td>ADDRESS</td><td>DESCRIPTION</td>
+    <td>NAME</td><td>CATEGORY</td><td>LATITUDE</td><td>LONGITUDE</td><td>ADDRESS</td><td>DESCRIPTION</td>
   </tr>
 
   <tr  *ngFor="let point of getPoints(); let i = index; let e=even; let o=odd" [attr.data-index]="i"  [ngClass]="{odd:o, even:e}">
@@ -21,4 +19,4 @@
 </table>
 
 <app-map (updatePointMap)="initPointMap()" [pointsFromPointsComponent]="getPoints()"></app-map>
-
+<app-point-form (createPointEvent)="updateList($event)"> </app-point-form>
