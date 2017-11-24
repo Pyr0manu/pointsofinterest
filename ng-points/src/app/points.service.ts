@@ -7,8 +7,27 @@ import "rxjs/add/operator/map"
 @Injectable()
 export class PointsService {
 
-  constructor(public http:Http) { }
+  pointMap:Point;
 
+  constructor(public http:Http) {
+    this.pointMap=  {
+      nom : "",
+      address: "",
+      description: "",
+      latitude:0,
+      longitude : 0
+    };
+
+  }
+
+  getpointMap(){
+    return this.pointMap;
+  }
+
+  setpointMap(lat:number, lon: number) {
+    this.pointMap.latitude=lat;
+    this.pointMap.longitude=lon;
+  }
 
   getPoints():Observable<Point[]>{
     return this.http.get('http://localhost:8080/poi/api/points').map(response =>response.json());

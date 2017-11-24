@@ -1,5 +1,5 @@
 
-<app-point-form (createPointEvent)="updateList($event)"> </app-point-form>
+<app-point-form  (createPointEvent)="updateList($event)"> </app-point-form>
 <h3>List of Points of Interest</h3>
 
 <table id="poiTable">
@@ -19,7 +19,6 @@
       </form>
   </tr>
 
-
   <tr  *ngFor="let point of getPoints(); let i = index; let e=even; let o=odd" [attr.data-index]="i"  [ngClass]="{odd:o, even:e}">
     <td>      {{point.nom}}</td>
     <td>      {{point.categorie?.nom}}</td>
@@ -30,9 +29,7 @@
     <td>      <app-selectedpoint [pointSelected]="point" (removePoint)="updateListRemove($event)"></app-selectedpoint></td>
   </tr>
 
-
-
 </table>
 
-<app-map [pointsFromPointsComponent]="getPoints()"></app-map>
+<app-map (updatePointMap)="initPointMap()" [pointsFromPointsComponent]="getPoints()"></app-map>
 

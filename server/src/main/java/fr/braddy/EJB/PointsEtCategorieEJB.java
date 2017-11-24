@@ -41,14 +41,14 @@ public class PointsEtCategorieEJB {
 
 	}
 	
-	public void creerPointTest(int number) {
-		for(int i =0 ; i < number ; i++){
-		Point point = new Point();
-		point.setNom("testJaxrs");
-		point.setAddress("testJaxrs");
-		point.setLatitude(123456789);
-		point.setLongitude(123456789);
-		em.persist(point);
+	public void creerPointTest(double [][] table) {
+		for(double[] coordonnee : table){
+			Point point = new Point();
+			point.setNom("testJaxrs");
+			point.setAddress("testJaxrs");
+			point.setLatitude(coordonnee[0]);
+			point.setLongitude(coordonnee[1]);
+			em.persist(point);
 		}
 	
 	}

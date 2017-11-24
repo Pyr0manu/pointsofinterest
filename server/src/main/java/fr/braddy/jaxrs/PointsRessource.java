@@ -29,10 +29,10 @@ public class PointsRessource {
 	@Path("init")
 	public String testPoint(){
 		String[] tab = {"restaurants", "musées", "points de vue","monuments historique", "Oeuvres d'art" };
+		double[][] tab2 = {{43.566810, 1.466468},{48.868550, 2.355298},{46.250716, 4.171884}, {46.531672, 0.122416}};
 		pointsEtCategorieEJB.creerCategorie(tab);
-		pointsEtCategorieEJB.creerPointTest(10);
+		pointsEtCategorieEJB.creerPointTest(tab2);
 		return "init ok";
-		
 	}
 	
 	@GET
