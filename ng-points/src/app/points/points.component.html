@@ -18,5 +18,5 @@
 
 </table>
 
-<app-map (updatePointMap)="initPointMap()" [pointsFromPointsComponent]="getPoints()"></app-map>
+<app-map [pointsFromPointsComponent]="getPoints()"></app-map>
 <app-point-form (createPointEvent)="updateList($event)"> </app-point-form>

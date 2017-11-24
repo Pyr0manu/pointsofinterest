@@ -17,18 +17,7 @@ export class PointFormComponent implements OnInit{
   };
 
   ngOnInit() {
-    this.point =  {
-      nom : "",
-      address: "",
-      description: "",
-      latitude:this.service.getPointMap().latitude,
-      longitude :this.service.getPointMap().longitude
-    };
-  }
-
-  setPoint() {
-    this.point.longitude= this.service.getPointMap().longitude
-    this.point.latitude= this.service.getPointMap().latitude
+    this.point = this.service.pointMap;
   }
 
   createPoint(){
@@ -36,7 +25,7 @@ export class PointFormComponent implements OnInit{
     this.service.createPoint(this.point).subscribe((point)=> {
       this.createPointEvent.emit(point);
       this.point.nom="";
-      this.point.address="";
+      this.point.address=this.service.getPointMap().address;
       this.point.description="";
       this.point.categorie=null;
       this.point.latitude=this.service.getPointMap().latitude;

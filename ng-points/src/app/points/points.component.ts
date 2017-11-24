@@ -25,10 +25,6 @@ export class PointsComponent implements OnInit {
   constructor(public pointsService : PointsService){
   };
 
-  initPointMap() {
-    this.pointForm.setPoint();
-  }
-
   getPoints():Point[]{
     return this.points;
   }

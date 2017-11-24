@@ -27,6 +27,10 @@ export class PointsService {
     this.pointMap.longitude = longitude;
   }
 
+  setAddressPointMap(address:string){
+    this.pointMap.address = address;
+  }
+
   getPoints():Observable<Point[]>{
     return this.http.get('http://localhost:8080/poi/api/points').map(response =>response.json());
   }

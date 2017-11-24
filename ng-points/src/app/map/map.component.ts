@@ -5,7 +5,7 @@ import {
 import {Point} from "../../models/models";
 import {PointsService} from "../services/points.service";
 
-declare const google:any;
+declare const google: any;
 
 @Component({
   selector: 'app-map',
@@ -14,15 +14,15 @@ declare const google:any;
 })
 
 export class MapComponent implements OnInit, OnChanges {
-  nativeSearchBoxElement:any;
-  searchBox:any;
-  nativeMapElement:any;
-  map:any;
-  @Input() pointsFromPointsComponent:Point[]=[];
-  @Output() updatePointMap: EventEmitter<Point> = new EventEmitter();
-  point : Point
+  nativeSearchBoxElement: any;
+  searchBox: any;
+  nativeMapElement: any;
+  map: any;
+  @Input() pointsFromPointsComponent: Point[] = [];
+  point: Point
+  geocoder: any = new google.maps.Geocoder();
 
-  constructor(public element:ElementRef, public pointService:PointsService, private zone:NgZone) {
+  constructor(public element: ElementRef, public pointService: PointsService, private zone: NgZone) {
   }
 
   ngOnInit() {
@@ -39,36 +39,60 @@ export class MapComponent implements OnInit, OnChanges {
       this.initMap();
       this.initSearchBox();
     }
-    if (this.map!=null){
+    if (this.map != null) {
       this.initMap();
       this.initSearchBox();
     }
     this.addPoints(this.pointsFromPointsComponent);
   }
 
-  initMap(){
+  initMap() {
     this.map = new google.maps.Map(this.nativeMapElement, {
       center: {lat: 46.967889, lng: 2.419104},
       zoom: 5,
       mapTypeId: 'satellite'
     });
 
-    google.maps.event.addListener(this.map, "click", (event)=> {
-      this.updatePointMapZone(event.latLng.lat(),event.latLng.lng());
+    google.maps.event.addListener(this.map, "click", (event) => {
+      this.updatePointMapZone(event.latLng.lat(), event.latLng.lng());
     });
   }
 
-  updatePointMapZone(latitude:number, longitude:number){
-    this.zone.run(()=>{
-      this.pointService.setPointMap(latitude, longitude)
-      this.updatePointMap.emit()
+  updatePointMapZone(latitude: number, longitude: number) {
+    this.zone.run(() => {
+     this.addressFromLatitudeLongitude(latitude, longitude);
+      this.pointService.setPointMap(latitude, longitude);
     })
   }
 
-  addPoints(points:Point[]){
+  addressFromLatitudeLongitude(latitude, longitude) {
+    var latlng = new google.maps.LatLng(latitude, longitude);
+    var address = this.geocoder.geocode({'latLng': latlng}, (results, status) => {
+      if (status === google.maps.GeocoderStatus.OK) {
+        if (results[1]) {
+          console.log("results[1] = " + results[1]);
+          this.updateAddressZone(results[1].formatted_address)
+          return results[1].formatted_address;
+        } else {
+          return 'No results found';
+        }
+      } else {
+        return "Geocoder failed due to: ' + status";
+      }
+    });
+  }
+  updateAddressZone(address:string){
+    this.zone.run(()=>
+    {
+      console.log(address);
+      this.pointService.setAddressPointMap(address);
+    })
+  }
+
+  addPoints(points: Point[]) {
     //on parcourt la liste de points et on ajoute les points à la carte
 
-    for(let point of points){
+    for (let point of points) {
 
       var myCoordinate = new google.maps.LatLng(point.latitude, point.longitude);
       var marker = new google.maps.Marker({
@@ -89,31 +113,31 @@ export class MapComponent implements OnInit, OnChanges {
     }
   }
 
-  initSearchBox(){
+  initSearchBox() {
     // Create the search box and link it to the UI element.
     this.searchBox = new google.maps.places.SearchBox(this.nativeSearchBoxElement);
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(this.nativeSearchBoxElement);
     // Bias the SearchBox results towards current map's viewport.
-    this.map.addListener('bounds_changed', function() {
-     // debugger;
+    this.map.addListener('bounds_changed', function () {
+      // debugger;
       this.searchBox.setBounds(this.map.getBounds());
-    }.bind(this)  );
+    }.bind(this));
     var markers = [];
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
-    this.searchBox.addListener('places_changed', function() {
+    this.searchBox.addListener('places_changed', function () {
       var places = this.searchBox.getPlaces();
       if (places.length == 0) {
         return;
       }
       // Clear out the old markers.
-      markers.forEach(function(marker) {
+      markers.forEach(function (marker) {
         marker.setMap(null);
       });
       markers = [];
       // For each place, get the icon, name and location.
       var bounds = new google.maps.LatLngBounds();
-      places.forEach(function(place) {
+      places.forEach(function (place) {
         if (!place.geometry) {
           console.log("Returned place contains no geometry");
           return;
