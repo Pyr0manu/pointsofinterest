@@ -2,6 +2,8 @@ import {Component, OnInit, Output, ViewChild} from '@angular/core';
 import {PointsService} from "../points.service";
 import {Point} from "../../models/models";
 import {MapComponent} from "../map/map.component";
+import {PointFormComponent} from "../point-form/point-form.component";
+import {SelectedpointComponent} from "../selectedpoint/selectedpoint.component";
 
 @Component({
   selector: 'app-points',
@@ -12,6 +14,8 @@ export class PointsComponent implements OnInit {
 
   points:Point[] = [];
   @ViewChild(MapComponent) map:MapComponent;
+  @ViewChild(PointFormComponent) pointForm:PointFormComponent
+
 
   ngOnInit() {
     this.pointsService.getPoints().subscribe(points => {
@@ -20,6 +24,10 @@ export class PointsComponent implements OnInit {
 
   constructor(public pointsService : PointsService){
   };
+
+  initPointMap() {
+    this.pointForm.setPoint();
+  }
 
   getPoints():Point[]{
     return this.points;

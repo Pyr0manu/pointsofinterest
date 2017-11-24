@@ -1,5 +1,9 @@
-import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChange, SimpleChanges, ViewChild} from '@angular/core';
+import {
+  Component, ElementRef, EventEmitter, Input, NgZone, OnChanges, OnInit, Output, SimpleChange, SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import {Point} from "../../models/models";
+import {PointsService} from "../points.service";
 
 declare const google:any;
 
@@ -15,10 +19,19 @@ export class MapComponent implements OnInit, OnChanges {
   nativeMapElement:any;
   map:any;
   @Input() pointsFromPointsComponent:Point[]=[];
+  @Output() updatePointMap: EventEmitter<Point> = new EventEmitter();
   markers;
   myLatLngs;
+  point : Point
 
-  constructor(public element:ElementRef) {
+  constructor(public element:ElementRef , public mapService : PointsService, private zone:NgZone) {
+    this.point=  {
+      nom : "",
+      address: "",
+      description: "",
+      latitude:0,
+      longitude : 0
+    };
   }
 
   ngOnInit() {
@@ -48,7 +61,21 @@ export class MapComponent implements OnInit, OnChanges {
       zoom: 5,
       mapTypeId: 'satellite'
     });
+
+    google.maps.event.addListener(this.map, "click", (event)=> {
+      console.log(event.latLng.lat(), event.latLng.lng());
+      console.log(this.mapService);
+      this.updatePointMapZone(event.latLng.lat(),event.latLng.lng());
+    });
   }
+
+  updatePointMapZone(latitude:number, longitude:number){
+    this.zone.run(()=>{
+      this.mapService.setpointMap(latitude, longitude)
+      this.updatePointMap.emit()
+    })
+  }
+
 
   addPoints(points:Point[]){
     //on parcourt la liste de points et on ajoute les points à la carte
