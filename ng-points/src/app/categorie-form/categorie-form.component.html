@@ -1,0 +1,9 @@
+<table>
+<tr>
+  <form name="categorie-form" #categorieForm="ngForm">
+    <td> <label>Nouvelle categorie : <input type="text" [(ngModel)]="newCategorie.nom" name="nom"> </label></td>
+    <td> <label><button type="button" (click)="createCategorie()">Créer</button> </label></td>
+  </form>
+</tr>
+
+</table>
