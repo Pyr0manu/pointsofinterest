@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 
 import fr.braddy.EJB.PointsEtCategorieEJB;
 import fr.braddy.models.Categorie;
+import fr.braddy.models.PathLoop;
 import fr.braddy.models.Point;
 
 @Path("points")
@@ -48,15 +49,12 @@ public class PointsRessource {
 	
 	@POST
 	public Point creationPoint(Point point){
-
-
 		return pointsEtCategorieEJB.ajouterPoint(point);
 	}
 	
 	@PUT
 	public Point modifierPoint(Point point){
 		return pointsEtCategorieEJB.modifierPoint(point);
-		
 	}
 
 	@DELETE
@@ -65,6 +63,11 @@ public class PointsRessource {
 		pointsEtCategorieEJB.supprimerPoint(id);
 	}
 
+	@POST
+	@Path("itineraire")
+	public Point[] calculItineraire(PathLoop pathLoop){
+		return pointsEtCategorieEJB.calculItineraire(pathLoop.getDepart(), pathLoop.getEtapes());
+	}
 
 
 }

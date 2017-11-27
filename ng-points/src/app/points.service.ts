@@ -29,7 +29,7 @@ export class PointsService {
   supprimerPoint(id : number) {
   return this.http.delete('http://localhost:8080/poi/api/points/'+id);
 }
-
-
-
+  calculItineraire(depart:Point, etapes:Point[]):Observable<Point[]> {
+    return this.http.post('http://localhost:8080/poi/api/points/itineraire', depart, etapes).map(response => response.json());
+  }
 }
