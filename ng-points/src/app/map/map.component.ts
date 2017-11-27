@@ -66,8 +66,8 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   addressFromLatitudeLongitude(latitude, longitude) {
-    var latlng = new google.maps.LatLng(latitude, longitude);
-    var address = this.geocoder.geocode({'latLng': latlng}, (results, status) => {
+    const latlng = new google.maps.LatLng(latitude, longitude);
+    const address = this.geocoder.geocode({'latLng': latlng}, (results, status) => {
       if (status === google.maps.GeocoderStatus.OK) {
         if (results[1]) {
           console.log("results[1] = " + results[1]);
@@ -94,8 +94,8 @@ export class MapComponent implements OnInit, OnChanges {
 
     for (let point of points) {
 
-      var myCoordinate = new google.maps.LatLng(point.latitude, point.longitude);
-      var marker = new google.maps.Marker({
+      const myCoordinate = new google.maps.LatLng(point.latitude, point.longitude);
+      const marker = new google.maps.Marker({
         position: myCoordinate,
         map: this.map,
         clickable: true,
@@ -105,7 +105,7 @@ export class MapComponent implements OnInit, OnChanges {
       });
       google.maps.event.addListener(marker, 'click', function () {
         /* Ajoute l'info-bulle sur le point lorsqu'on clique dessus */
-        var infobulle = new google.maps.InfoWindow({
+        const infobulle = new google.maps.InfoWindow({
           content: this.descriptionLabo
         });
         infobulle.open(this.map, this);
@@ -122,11 +122,11 @@ export class MapComponent implements OnInit, OnChanges {
       // debugger;
       this.searchBox.setBounds(this.map.getBounds());
     }.bind(this));
-    var markers = [];
+    let markers = [];
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
     this.searchBox.addListener('places_changed', function () {
-      var places = this.searchBox.getPlaces();
+      const places = this.searchBox.getPlaces();
       if (places.length == 0) {
         return;
       }
@@ -136,13 +136,13 @@ export class MapComponent implements OnInit, OnChanges {
       });
       markers = [];
       // For each place, get the icon, name and location.
-      var bounds = new google.maps.LatLngBounds();
+      const bounds = new google.maps.LatLngBounds();
       places.forEach(function (place) {
         if (!place.geometry) {
           console.log("Returned place contains no geometry");
           return;
         }
-        var icon = {
+        const icon = {
           url: place.icon,
           size: new google.maps.Size(71, 71),
           origin: new google.maps.Point(0, 0),
