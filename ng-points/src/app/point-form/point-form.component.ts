@@ -9,11 +9,15 @@ import {PointsService} from "../services/points.service";
 })
 export class PointFormComponent implements OnInit{
   point:Point;
+  newCategorie:Categorie;
   categories :Categorie[] = [];
   @Output() createPointEvent: EventEmitter<Point> = new EventEmitter();
 
   constructor(public service:PointsService) {
-    this.service.getCategorie().subscribe(categories => this.categories = categories);
+    this.service.getCategorie().subscribe(categories => this.categories = categories)
+    this.newCategorie={nom:""};
+
+
   };
 
   ngOnInit() {
@@ -21,20 +25,24 @@ export class PointFormComponent implements OnInit{
   }
 
   createPoint(){
-
     this.service.createPoint(this.point).subscribe((point)=> {
       this.createPointEvent.emit(point);
       this.point.nom="";
-      this.point.address=this.service.getPointMap().address;
+      this.point.address="";
       this.point.description="";
       this.point.categorie=null;
-      this.point.latitude=this.service.getPointMap().latitude;
-      this.point.longitude=this.service.getPointMap().longitude;
+      this.point.latitude=0;
+      this.point.longitude=0;
      })
   }
 
   getCategories():Categorie[]{
     return this.categories;
   }
+
+  updateCategorieList(categorie:Categorie){
+    this.categories.push(categorie);
+  }
+
 
 }

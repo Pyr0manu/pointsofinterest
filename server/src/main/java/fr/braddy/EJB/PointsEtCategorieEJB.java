@@ -19,14 +19,14 @@ public class PointsEtCategorieEJB {
     @PersistenceContext
     EntityManager em;
 
+    public Categorie creerCategorie(Categorie categorie){  em.persist(categorie); return categorie;}
 
-    public void creerCategorie(String[] tab) {
+    public void creerCategorietest(String[] tab) {
         for (String current : tab) {
             Categorie categorie = new Categorie();
             categorie.setNom(current);
             em.persist(categorie);
         }
-
     }
 
     public List<Categorie> findAllCategorie() {
@@ -50,26 +50,24 @@ public class PointsEtCategorieEJB {
 
 
     public Point ajouterPoint(Point point) {
-        Query query = em.createQuery("SELECT p FROM Point p WHERE p.nom LIKE :nom AND p.longitude LIKE :long AND p.latitude LIKE :lat", Point.class)
+        /*Query query = em.createQuery("SELECT p FROM Point p WHERE p.nom LIKE :nom AND p.longitude LIKE :long AND p.latitude LIKE :lat", Point.class)
                 .setParameter("nom", point.getNom())
                 .setParameter("long", point.getLongitude())
                 .setParameter("lat", point.getLatitude());
-
         Point pointExistant = new Point();
         try {
             pointExistant = (Point) query.getSingleResult();
         } catch (Exception e) {
             pointExistant = null;
         }
+        if (pointExistant == null) {*/
 
-        if (pointExistant == null) {
-            em.persist(point);
-            return point;
+        em.persist(point);
+        return point;
 
-        } else {
-
+        /*} else {
             return null;
-        }
+        }*/
 
 
     }

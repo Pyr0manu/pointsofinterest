@@ -54,6 +54,9 @@ export class PointsService {
   deletePoint(id : number) {
   return this.http.delete('http://localhost:8080/poi/api/points/'+id);
 }
+  createCategorie(categorie : Categorie):Observable<Categorie>{
+    return this.http.post('http://localhost:8080/poi/api/points/categorie', categorie).map(response =>response.json());
+  }
 
 
 

@@ -1,8 +1,6 @@
 import {Component, OnInit, Output, ViewChild} from '@angular/core';
-import {PointsService} from "../points.service";
 import {Categorie, Point} from "../../models/models";
 import {PointsService} from "../services/points.service";
-import {Point} from "../../models/models";
 import {MapComponent} from "../map/map.component";
 import {PointFormComponent} from "../point-form/point-form.component";
 import {SelectedpointComponent} from "../selectedpoint/selectedpoint.component";
@@ -36,7 +34,7 @@ export class PointsComponent implements OnInit {
   }
 
   filterList(){
-    if(this.motClef.length>1 && this.choixColonne.length>1){
+    if(this.motClef.length>0 && this.choixColonne.length>1){
       this.pointsService.filterPoints(this.motClef, this.choixColonne).subscribe(points => {
         this.points = points; })
         this.map.addPoints(this.points)
@@ -47,7 +45,6 @@ export class PointsComponent implements OnInit {
         this.map.addPoints(this.points)
     }
   }
-
 
   updateList(point:Point){
     this.points.push(point);
