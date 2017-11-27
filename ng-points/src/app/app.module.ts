@@ -11,7 +11,6 @@ import { PointFormComponent } from './point-form/point-form.component';
 import {Http, HttpModule} from "@angular/http";
 import { SelectedpointComponent } from './selectedpoint/selectedpoint.component';
 import {} from '@types/googlemaps';
-import {WrapperService} from "./services/wrapper.service";
 import { CategorieFormComponent } from './categorie-form/categorie-form.component';
 
 
@@ -27,7 +26,7 @@ import { CategorieFormComponent } from './categorie-form/categorie-form.componen
   imports: [
     BrowserModule,HttpModule, FormsModule
   ],
-  providers: [PointsService, WrapperService],
+  providers: [PointsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

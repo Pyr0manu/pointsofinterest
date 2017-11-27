@@ -60,4 +60,7 @@ export class PointsService {
 
 
 
+  calculItineraire(depart:Point, etapes:Point[]):Observable<Point[]> {
+    return this.http.post('http://localhost:8080/poi/api/points/itineraire', depart, etapes).map(response => response.json());
+  }
 }
