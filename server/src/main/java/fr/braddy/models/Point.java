@@ -1,5 +1,7 @@
 package fr.braddy.models;
 
+import com.sopra.User;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,6 +32,17 @@ public class Point {
 	
 	@ManyToOne(cascade=CascadeType.MERGE)
 	private Categorie categorie;
+
+	@ManyToOne(cascade=CascadeType.MERGE)
+	private User user;
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public Categorie getCategorie() {
 		return categorie;

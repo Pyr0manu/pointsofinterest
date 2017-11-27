@@ -12,6 +12,7 @@ import {Http, HttpModule} from "@angular/http";
 import { SelectedpointComponent } from './selectedpoint/selectedpoint.component';
 import {} from '@types/googlemaps';
 import {WrapperService} from "./services/wrapper.service";
+import {LoggedService} from "./services/logged.service";
 
 
 @NgModule({
@@ -25,7 +26,7 @@ import {WrapperService} from "./services/wrapper.service";
   imports: [
     BrowserModule,HttpModule, FormsModule
   ],
-  providers: [PointsService, WrapperService],
+  providers: [PointsService, WrapperService, LoggedService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

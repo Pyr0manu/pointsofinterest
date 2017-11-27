@@ -6,6 +6,7 @@ export interface Point {
   latitude ?: number;
   longitude ?: number;
   categorie ?: Categorie;
+  user?:User;
 }
 
 export interface Categorie {
@@ -13,4 +14,9 @@ export interface Categorie {
   id?: number;
   nom : string;
 
+}
+
+export interface  User{
+  id?:number;
+  login:string;
 }

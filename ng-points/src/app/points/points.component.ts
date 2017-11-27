@@ -1,11 +1,9 @@
 import {Component, OnInit, Output, ViewChild} from '@angular/core';
-import {PointsService} from "../points.service";
 import {Categorie, Point} from "../../models/models";
-import {PointsService} from "../services/points.service";
-import {Point} from "../../models/models";
 import {MapComponent} from "../map/map.component";
 import {PointFormComponent} from "../point-form/point-form.component";
 import {SelectedpointComponent} from "../selectedpoint/selectedpoint.component";
+import {PointsService} from "../services/points.service";
 
 @Component({
   selector: 'app-points',

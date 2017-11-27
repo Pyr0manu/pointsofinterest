@@ -25,11 +25,11 @@ export class PointFormComponent implements OnInit{
     this.service.createPoint(this.point).subscribe((point)=> {
       this.createPointEvent.emit(point);
       this.point.nom="";
-      this.point.address=this.service.getPointMap().address;
+      this.point.address="";
       this.point.description="";
       this.point.categorie=null;
-      this.point.latitude=this.service.getPointMap().latitude;
-      this.point.longitude=this.service.getPointMap().longitude;
+      this.point.latitude=0;
+      this.point.longitude=0;
      })
   }
 

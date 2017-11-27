@@ -1,5 +1,7 @@
 package fr.braddy.jaxrs;
 
+import com.sopra.api.UserResource;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,6 +16,7 @@ public class ApiApplication extends Application{
 
 	        Set<Class<?>> s = new  HashSet<Class<?>>();
 	        s.add(PointsRessource.class);
+	        s.add(UserResource.class);
 	        return s;
 	    }
 

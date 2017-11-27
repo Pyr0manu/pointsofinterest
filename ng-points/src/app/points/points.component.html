@@ -1,5 +1,7 @@
 
 <h3>List of Points of Interest</h3>
+
+
 <table>
     <tr>
       <form name="filter-form" #filterForm="ngForm">
@@ -28,7 +30,7 @@
   <table>
 
   <tr>
-    <td>NAME</td><td>CATEGORY</td><td>LATITUDE</td><td>LONGITUDE</td><td>ADDRESS</td><td>DESCRIPTION</td>
+    <td>NAME</td><td>CATEGORY</td><td>LATITUDE</td><td>LONGITUDE</td><td>ADDRESS</td><td>DESCRIPTION</td><td>WRITER</td>
   </tr>
 
 
@@ -39,6 +41,7 @@
     <td>      {{point.longitude}}</td>
     <td>      {{point.address}}</td>
     <td>      {{point.description}}</td>
+    <td>      {{point.user?.login}}</td>
     <td>      <app-selectedpoint [pointSelected]="point" (removePoint)="updateListRemove($event)"></app-selectedpoint></td>
   </tr>
 
