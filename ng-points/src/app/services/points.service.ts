@@ -35,6 +35,10 @@ export class PointsService {
     return this.http.get('http://localhost:8080/poi/api/points').map(response =>response.json());
   }
 
+  filterPoints(motClef : string, choixColonne : string):Observable<Point[]>{
+    return this.http.get('http://localhost:8080/poi/api/points/search/'+motClef+'/'+choixColonne).map(response =>response.json());
+  }
+
   getCategorie():Observable<Categorie[]>{
     return this.http.get('http://localhost:8080/poi/api/points/categories').map(response =>response.json());
   }
