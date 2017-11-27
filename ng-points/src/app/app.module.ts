@@ -11,6 +11,7 @@ import { PointFormComponent } from './point-form/point-form.component';
 import {Http, HttpModule} from "@angular/http";
 import { SelectedpointComponent } from './selectedpoint/selectedpoint.component';
 import {} from '@types/googlemaps';
+import { TravelFormComponent } from './travel-form/travel-form.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {} from '@types/googlemaps';
     MapComponent,
     PointsComponent,
     PointFormComponent,
-    SelectedpointComponent
+    SelectedpointComponent,
+    TravelFormComponent
   ],
   imports: [
     BrowserModule,HttpModule, FormsModule
