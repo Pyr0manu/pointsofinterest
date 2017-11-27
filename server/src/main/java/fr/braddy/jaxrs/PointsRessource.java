@@ -43,6 +43,12 @@ public class PointsRessource {
 	}
 	
 	@GET
+	@Path("search/{motClef}/{choixColonne}")
+	public List<Point> rechercherListPoint(@PathParam("motClef") String motClef,@PathParam("choixColonne") String choixColonne ){
+		return pointsEtCategorieEJB.recherchePoint(motClef, choixColonne);
+	}
+
+	@GET
 	public List<Point> afficherListPoint(){
 		return pointsEtCategorieEJB.findAllPoint();
 	}

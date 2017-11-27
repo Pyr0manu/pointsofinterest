@@ -1,3 +1,4 @@
+<h3>Add the POI : ({{point.latitude}},{{point.longitude}})</h3>
 <form name="point-form" #pointForm="ngForm">
   <table>
     <tr>
@@ -29,6 +30,4 @@
     </tr>
   </table>
   <button type="button" [disabled]="!pointForm.form.valid" (click) = "createPoint()">Add point</button>
-
 </form>
-

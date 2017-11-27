@@ -1,7 +1,11 @@
-import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChange, SimpleChanges, ViewChild} from '@angular/core';
+import {
+  Component, ElementRef, EventEmitter, Input, NgZone, OnChanges, OnInit, Output, SimpleChange, SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import {Point} from "../../models/models";
+import {PointsService} from "../services/points.service";
 
-declare const google:any;
+declare const google: any;
 
 @Component({
   selector: 'app-map',
@@ -10,15 +14,15 @@ declare const google:any;
 })
 
 export class MapComponent implements OnInit, OnChanges {
-  nativeSearchBoxElement:any;
-  searchBox:any;
-  nativeMapElement:any;
-  map:any;
-  @Input() pointsFromPointsComponent:Point[]=[];
-  markers;
-  myLatLngs;
+  nativeSearchBoxElement: any;
+  searchBox: any;
+  nativeMapElement: any;
+  map: any;
+  @Input() pointsFromPointsComponent: Point[] = [];
+  point: Point
+  geocoder: any = new google.maps.Geocoder();
 
-  constructor(public element:ElementRef) {
+  constructor(public element: ElementRef, public pointService: PointsService, private zone: NgZone) {
   }
 
   ngOnInit() {
@@ -35,41 +39,73 @@ export class MapComponent implements OnInit, OnChanges {
       this.initMap();
       this.initSearchBox();
     }
-    if (this.map!=null){
+    if (this.map != null) {
       this.initMap();
       this.initSearchBox();
     }
     this.addPoints(this.pointsFromPointsComponent);
   }
 
-  initMap(){
+  initMap() {
     this.map = new google.maps.Map(this.nativeMapElement, {
       center: {lat: 46.967889, lng: 2.419104},
       zoom: 5,
       mapTypeId: 'satellite'
     });
+
+    google.maps.event.addListener(this.map, "click", (event) => {
+      this.updatePointMapZone(event.latLng.lat(), event.latLng.lng());
+    });
   }
 
-  addPoints(points:Point[]){
-    //on parcourt la liste de points et on ajoute les points à la carte
-    this.markers = [];
-    //markers.forEach(function(marker){marker.setMap(null)});
-    this.myLatLngs = [];
-    for(let i = 0 ; i<points.length;i++){
-      var point = points[i];
+  updatePointMapZone(latitude: number, longitude: number) {
+    this.zone.run(() => {
+     this.addressFromLatitudeLongitude(latitude, longitude);
+      this.pointService.setPointMap(latitude, longitude);
+    })
+  }
 
-      this.myLatLngs[i] = new google.maps.LatLng(point.latitude, point.longitude);
-      this.markers[i] = new google.maps.Marker({
-        position: this.myLatLngs[i],
+  addressFromLatitudeLongitude(latitude, longitude) {
+    const latlng = new google.maps.LatLng(latitude, longitude);
+    const address = this.geocoder.geocode({'latLng': latlng}, (results, status) => {
+      if (status === google.maps.GeocoderStatus.OK) {
+        if (results[1]) {
+          console.log("results[1] = " + results[1]);
+          this.updateAddressZone(results[1].formatted_address)
+          return results[1].formatted_address;
+        } else {
+          return 'No results found';
+        }
+      } else {
+        return "Geocoder failed due to: ' + status";
+      }
+    });
+  }
+  updateAddressZone(address:string){
+    this.zone.run(()=>
+    {
+      console.log(address);
+      this.pointService.setAddressPointMap(address);
+    })
+  }
+
+  addPoints(points: Point[]) {
+    //on parcourt la liste de points et on ajoute les points à la carte
+
+    for (let point of points) {
+
+      const myCoordinate = new google.maps.LatLng(point.latitude, point.longitude);
+      const marker = new google.maps.Marker({
+        position: myCoordinate,
         map: this.map,
         clickable: true,
         animation: google.maps.Animation.DROP, /* animation : le point est déposé sur la carte */
         descriptionLabo: point.nom, /* description qui sera affichée lorsqu'on clique sur le point */
         setMap: this.map
       });
-      google.maps.event.addListener(this.markers[i], 'click', function () {
+      google.maps.event.addListener(marker, 'click', function () {
         /* Ajoute l'info-bulle sur le point lorsqu'on clique dessus */
-        var infobulle = new google.maps.InfoWindow({
+        const infobulle = new google.maps.InfoWindow({
           content: this.descriptionLabo
         });
         infobulle.open(this.map, this);
@@ -77,36 +113,36 @@ export class MapComponent implements OnInit, OnChanges {
     }
   }
 
-  initSearchBox(){
+  initSearchBox() {
     // Create the search box and link it to the UI element.
     this.searchBox = new google.maps.places.SearchBox(this.nativeSearchBoxElement);
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(this.nativeSearchBoxElement);
     // Bias the SearchBox results towards current map's viewport.
-    this.map.addListener('bounds_changed', function() {
-     // debugger;
+    this.map.addListener('bounds_changed', function () {
+      // debugger;
       this.searchBox.setBounds(this.map.getBounds());
-    }.bind(this)  );
-    var markers = [];
+    }.bind(this));
+    let markers = [];
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
-    this.searchBox.addListener('places_changed', function() {
-      var places = this.searchBox.getPlaces();
+    this.searchBox.addListener('places_changed', function () {
+      const places = this.searchBox.getPlaces();
       if (places.length == 0) {
         return;
       }
       // Clear out the old markers.
-      markers.forEach(function(marker) {
+      markers.forEach(function (marker) {
         marker.setMap(null);
       });
       markers = [];
       // For each place, get the icon, name and location.
-      var bounds = new google.maps.LatLngBounds();
-      places.forEach(function(place) {
+      const bounds = new google.maps.LatLngBounds();
+      places.forEach(function (place) {
         if (!place.geometry) {
           console.log("Returned place contains no geometry");
           return;
         }
-        var icon = {
+        const icon = {
           url: place.icon,
           size: new google.maps.Size(71, 71),
           origin: new google.maps.Point(0, 0),

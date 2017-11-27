@@ -1,14 +1,38 @@
 
-<app-point-form (createPointEvent)="updateList($event)"> </app-point-form>
 <h3>List of Points of Interest</h3>
+<table>
+    <tr>
+      <form name="filter-form" #filterForm="ngForm">
+      <td><label>
+          <select [(ngModel)] = "choixColonne" name="choixColonne">
+            <option [ngValue]="'nom'">Nom</option>
+            <option [ngValue]="'address'">Adresse</option>
+            <option [ngValue]="'description'">Description</option>
+            <option [ngValue]="'categorie'">Categorie</option>
+          </select>
+        </label></td>
+        <td *ngIf="choixColonne==='categorie'">
+          <label>Categorie :
+            <select [(ngModel)] = "motClef" name="motClef">
+              <option *ngFor="let categorie of getCategories()" [ngValue]="categorie.nom">{{categorie.nom}}</option>
+            </select>
+          </label>
+        </td>
 
-<table id="poiTable">
+    <td  *ngIf="choixColonne!=='categorie'"><label>Mot(s) clef : <input type="text" [(ngModel)] = "motClef" name="motClef"></label></td>
+    <td><button type="button" (click) = "filterList()">filtrer</button></td>
+      </form>
+    </tr>
+</table>
+
+  <table>
 
   <tr>
-    <td>NAME</td><td>CATEGORIE</td><td>LATITUDE</td><td>LONGITUDE</td><td>ADDRESS</td><td>DESCRIPTION</td>
+    <td>NAME</td><td>CATEGORY</td><td>LATITUDE</td><td>LONGITUDE</td><td>ADDRESS</td><td>DESCRIPTION</td>
   </tr>
 
-  <tr  *ngFor="let point of getPoints(); let i = index; let e=even; let o=odd" [attr.data-index]="i"  [ngClass]="{odd:o, even:e}">
+
+  <tr  *ngFor="let point of getPoints();">
     <td>      {{point.nom}}</td>
     <td>      {{point.categorie?.nom}}</td>
     <td>      {{point.latitude}}</td>
@@ -20,5 +44,5 @@
 
 </table>
 
-<app-map [pointsFromPointsComponent]="getPoints()"></app-map>
-
+<app-map (updatePointMap)="initPointMap()" [pointsFromPointsComponent]="getPoints()"></app-map>
+<app-point-form (createPointEvent)="updateList($event)"> </app-point-form>
