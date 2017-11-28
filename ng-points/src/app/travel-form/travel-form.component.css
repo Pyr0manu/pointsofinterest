@@ -1,0 +1,33 @@
+.trip-form {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-content: center;
+}
+
+.trip-form .steps{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-content: center;
+}
+
+.trip-form .start-form {
+
+}
+
+.trip-form .steps-form {
+
+}
+
+.trip-form .compute-button {
+
+}
+
+.trip-form .steps-print {
+
+}
+
+
+
+
