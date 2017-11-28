@@ -1,4 +1,6 @@
 package fr.braddy.EJB;
+
+
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -17,7 +19,9 @@ public class PointsEtCategorieEJB {
     @PersistenceContext
     EntityManager em;
 
-    public void creerCategorie(String[] tab) {
+    public Categorie creerCategorie(Categorie categorie){  em.persist(categorie); return categorie;}
+
+    public void creerCategorietest(String[] tab) {
         for (String current : tab) {
             Categorie categorie = new Categorie();
             categorie.setNom(current);
@@ -43,7 +47,7 @@ public class PointsEtCategorieEJB {
     }
 
     public Point ajouterPoint(Point point) {
-        Query query = em.createQuery("SELECT p FROM Point p WHERE p.nom LIKE :nom AND p.longitude LIKE :long AND p.latitude LIKE :lat", Point.class)
+        /*Query query = em.createQuery("SELECT p FROM Point p WHERE p.nom LIKE :nom AND p.longitude LIKE :long AND p.latitude LIKE :lat", Point.class)
                 .setParameter("nom", point.getNom())
                 .setParameter("long", point.getLongitude())
                 .setParameter("lat", point.getLatitude());
@@ -53,15 +57,14 @@ public class PointsEtCategorieEJB {
         } catch (Exception e) {
             pointExistant = null;
         }
+        if (pointExistant == null) {*/
 
-        if (pointExistant == null) {
-            em.persist(point);
-            return point;
+        em.persist(point);
+        return point;
 
-        } else {
-
+        /*} else {
             return null;
-        }
+        }*/
 
 
     }

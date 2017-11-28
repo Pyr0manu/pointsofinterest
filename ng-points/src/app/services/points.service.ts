@@ -53,8 +53,11 @@ export class PointsService {
     return this.http.put('http://localhost:8080/poi/api/points', point);
   }
 
-  deletePoint(id: number) {
-    return this.http.delete('http://localhost:8080/poi/api/points/' + id);
+  deletePoint(id : number) {
+  return this.http.delete('http://localhost:8080/poi/api/points/'+id);
+}
+  createCategorie(categorie : Categorie):Observable<Categorie>{
+    return this.http.post('http://localhost:8080/poi/api/points/categorie', categorie).map(response =>response.json());
   }
 
   computeTrip(depart: Point, etapes: Point[]): Observable<Point[]> {

@@ -12,6 +12,7 @@ import {Http, HttpModule} from "@angular/http";
 import { SelectedpointComponent } from './selectedpoint/selectedpoint.component';
 import {} from '@types/googlemaps';
 import { TravelFormComponent } from './travel-form/travel-form.component';
+import { CategorieFormComponent } from './categorie-form/categorie-form.component';
 
 
 @NgModule({
@@ -21,7 +22,9 @@ import { TravelFormComponent } from './travel-form/travel-form.component';
     PointsComponent,
     PointFormComponent,
     SelectedpointComponent,
-    TravelFormComponent
+    TravelFormComponent,
+    SelectedpointComponent,
+    CategorieFormComponent
   ],
   imports: [
     BrowserModule,HttpModule, FormsModule
