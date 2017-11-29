@@ -7,21 +7,31 @@
       <form name="filter-form" #filterForm="ngForm">
       <td><label>
           <select [(ngModel)] = "choixColonne" name="choixColonne">
-            <option [ngValue]="'nom'">Nom</option>
-            <option [ngValue]="'address'">Adresse</option>
+            <option [ngValue]="'nom'">Name</option>
+            <option [ngValue]="'address'">Address</option>
             <option [ngValue]="'description'">Description</option>
-            <option [ngValue]="'categorie'">Categorie</option>
+            <option [ngValue]="'categorie'">Category</option>
+            <option [ngValue]="'user'">Writer</option>
           </select>
         </label></td>
+
+        <td *ngIf="choixColonne==='user'">
+          <label>Writer :
+            <select [(ngModel)] = "motClef" name="motClef">
+              <option *ngFor="let user of getUsers()" [ngValue]="user.login">{{user.login}}</option>
+            </select>
+          </label>
+        </td>
+
         <td *ngIf="choixColonne==='categorie'">
-          <label>Categorie :
+          <label>Category :
             <select [(ngModel)] = "motClef" name="motClef">
               <option *ngFor="let categorie of getCategories()" [ngValue]="categorie.nom">{{categorie.nom}}</option>
             </select>
           </label>
         </td>
 
-    <td  *ngIf="choixColonne!=='categorie'"><label>Mot(s) clef : <input type="text" [(ngModel)] = "motClef" name="motClef"></label></td>
+    <td  *ngIf="choixColonne!=='categorie' && choixColonne!=='user'"><label>Mot(s) clef : <input type="text" [(ngModel)] = "motClef" name="motClef"></label></td>
     <td><button type="button" (click) = "filterList()">filtrer</button></td>
       </form>
     </tr>
@@ -30,7 +40,7 @@
   <table>
 
   <tr>
-    <td>NAME</td><td>CATEGORY</td><td>LATITUDE</td><td>LONGITUDE</td><td>ADDRESS</td><td>DESCRIPTION</td><td>WRITER</td>
+    <td>NAME</td><td>CATEGORY</td><td>LATITUDE</td><td>LONGITUDE</td><td>ADDRESS</td><td>DESCRIPTION</td><td>WRITER</td><td></td>
   </tr>
 
 

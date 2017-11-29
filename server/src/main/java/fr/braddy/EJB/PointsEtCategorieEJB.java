@@ -98,6 +98,11 @@ public class PointsEtCategorieEJB {
             TypedQuery<Point> query = em.createQuery("SELECT p FROM Point p join p.categorie c WHERE c.nom LIKE :motClef", Point.class)
                     .setParameter("motClef", "%" + motClef + "%");
             return query.getResultList();
+        }
+        if (choixColonne.equals("user")) {
+            TypedQuery<Point> query = em.createQuery("SELECT p FROM Point p join p.user u WHERE u.login LIKE :motClef", Point.class)
+                    .setParameter("motClef", "%" + motClef + "%");
+            return query.getResultList();
         } else {
 
             TypedQuery<Point> query = em.createQuery("SELECT p FROM Point p WHERE p." + choixColonne + " LIKE :motClef", Point.class)

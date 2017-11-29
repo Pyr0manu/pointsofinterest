@@ -1,9 +1,10 @@
 import {Component, OnInit, Output, ViewChild} from '@angular/core';
-import {Categorie, Point} from "../../models/models";
+import {Categorie, Point, User} from "../../models/models";
 import {MapComponent} from "../map/map.component";
 import {PointFormComponent} from "../point-form/point-form.component";
 import {SelectedpointComponent} from "../selectedpoint/selectedpoint.component";
 import {PointsService} from "../services/points.service";
+import {LoggedService} from "../services/logged.service";
 
 @Component({
   selector: 'app-points',
@@ -16,6 +17,7 @@ export class PointsComponent implements OnInit {
   motClef : string;
   choixColonne :string;
   categories :Categorie[] = [];
+  users:User[] = [];
   @ViewChild(MapComponent) map:MapComponent;
   @ViewChild(PointFormComponent) pointForm:PointFormComponent
 
@@ -24,9 +26,10 @@ export class PointsComponent implements OnInit {
       this.points = points; });
   }
 
-  constructor(public pointsService : PointsService){
+  constructor(public pointsService : PointsService, public loggedService : LoggedService){
     this.motClef=""
     this.pointsService.getCategorie().subscribe(categories => this.categories = categories);
+    this.loggedService.getUsers().subscribe(users => this.users = users);
   }
 
   getPoints():Point[]{
@@ -59,6 +62,10 @@ export class PointsComponent implements OnInit {
 
   getCategories():Categorie[]{
     return this.categories;
+  }
+
+  getUsers():User[]{
+    return this.users;
   }
 
 }

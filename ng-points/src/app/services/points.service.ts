@@ -3,13 +3,14 @@ import {Observable} from "rxjs/Observable";
 import {Categorie, Point} from "../../models/models";
 import {Http} from "@angular/http";
 import "rxjs/add/operator/map"
+import {LoggedService} from "./logged.service";
 
 @Injectable()
 export class PointsService {
 
   pointMap:Point;
 
-  constructor(public http:Http) {
+  constructor(public http:Http, public loggedService : LoggedService) {
     this.pointMap = {
       nom: "",
       address: "",

@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {Categorie, Point} from "../../models/models";
+import {Categorie, Point, User} from "../../models/models";
 import {PointsService} from "../services/points.service";
+import {LoggedService} from "../services/logged.service";
 
 @Component({
   selector: 'app-point-form',
@@ -10,10 +11,12 @@ import {PointsService} from "../services/points.service";
 export class PointFormComponent implements OnInit{
   point:Point;
   categories :Categorie[] = [];
+  logged:User;
   @Output() createPointEvent: EventEmitter<Point> = new EventEmitter();
 
-  constructor(public service:PointsService) {
+  constructor(public service:PointsService, public loggedService:LoggedService) {
     this.service.getCategorie().subscribe(categories => this.categories = categories);
+    this.loggedService.getConnectedUser().subscribe(user => this.logged = user);
   };
 
   ngOnInit() {
@@ -21,8 +24,8 @@ export class PointFormComponent implements OnInit{
   }
 
   createPoint(){
-
-    this.service.createPoint(this.point).subscribe((point)=> {
+      this.point.user = this.logged;
+      this.service.createPoint(this.point).subscribe((point)=> {
       this.createPointEvent.emit(point);
       this.point.nom="";
       this.point.address="";

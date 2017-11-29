@@ -10,13 +10,18 @@ export interface Point {
 }
 
 export interface Categorie {
-
   id?: number;
   nom : string;
-
 }
 
 export interface  User{
   id?:number;
   login:string;
+  email?:string;
+  rank?:number;
+
+  password?:any;
+  facebookId?:number;
+  token?:string;
+  salt?:any;
 }

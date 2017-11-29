@@ -1,1 +1,7 @@
-<button type="button" (click) = "deletePoint(pointSelected) ">Delete</button>
+
+
+<span *ngIf="pointSelected.user.login===logged?.login">
+
+  <button type="button" (click) = "deletePoint(pointSelected) ">Delete</button>
+</span>
+

@@ -11,9 +11,16 @@ export class AppComponent implements OnInit{
   title = 'the great map';
   logged:User;
 
-  constructor(public service : LoggedService){}
+  constructor(public service : LoggedService){
+  }
 
   ngOnInit(){
-    this.service.getConnectedUser();
+    this.service.getConnectedUser().subscribe(user=>this.logged=user);
   }
+
+  getLogged():User{
+   return this.logged;
+  }
+
+
 }
