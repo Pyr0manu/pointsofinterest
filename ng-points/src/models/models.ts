@@ -14,3 +14,9 @@ export interface Categorie {
   nom : string;
 
 }
+
+export interface Coordinate {
+
+  lat?: number;
+  lng?: number;
+}

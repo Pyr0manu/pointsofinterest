@@ -1,5 +1,5 @@
-import {Component, OnInit, Output, ViewChild} from '@angular/core';
-import {Categorie, Point} from "../../models/models";
+import {Component, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Categorie, Coordinate, Point} from "../../models/models";
 import {MapComponent} from "../map/map.component";
 import {PointFormComponent} from "../point-form/point-form.component";
 import {PointsService} from "../services/points.service";
@@ -11,16 +11,24 @@ import {PointsService} from "../services/points.service";
 })
 export class PointsComponent implements OnInit {
 
+
   points:Point[] = [];
   motClef : string;
   choixColonne :string;
   categories :Categorie[] = [];
+  coordinate:Coordinate={};
+  myCoordinates : Coordinate[]=[];
   @ViewChild(MapComponent) map:MapComponent;
   @ViewChild(PointFormComponent) pointForm:PointFormComponent
 
   ngOnInit() {
     this.pointsService.getPoints().subscribe(points => {
       this.points = points; });
+    for (let i = 0; i < this.points.length; i++) {
+      this.coordinate.lat = this.points[i].latitude;
+      this.coordinate.lng = this.points[i].longitude;
+      this.myCoordinates.push(this.coordinate)
+    }
   }
 
   constructor(public pointsService : PointsService){
@@ -58,5 +66,8 @@ export class PointsComponent implements OnInit {
   getCategories():Categorie[]{
     return this.categories;
   }
+  getCoordinateTab():Coordinate[] {
 
+    return this.myCoordinates
+  }
 }

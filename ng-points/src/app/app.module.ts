@@ -21,7 +21,7 @@ import { CategorieFormComponent } from './categorie-form/categorie-form.componen
     PointsComponent,
     PointFormComponent,
     SelectedpointComponent,
-    CategorieFormComponent
+    CategorieFormComponent,
   ],
   imports: [
     BrowserModule,HttpModule, FormsModule

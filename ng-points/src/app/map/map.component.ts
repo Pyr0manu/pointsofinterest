@@ -2,7 +2,7 @@ import {
   Component, ElementRef, EventEmitter, Input, NgZone, OnChanges, OnInit, Output, SimpleChange, SimpleChanges,
   ViewChild
 } from '@angular/core';
-import {Point} from "../../models/models";
+import {Coordinate, Point} from "../../models/models";
 import {PointsService} from "../services/points.service";
 
 declare const google: any;
@@ -18,11 +18,14 @@ export class MapComponent implements OnInit, OnChanges {
   searchBox: any;
   nativeMapElement: any;
   map: any;
+  @Input() myCoordinates : Coordinate[]=[];
   @Input() pointsFromPointsComponent: Point[] = [];
   point: Point
   geocoder: any = new google.maps.Geocoder();
 
+
   constructor(public element: ElementRef, public pointService: PointsService, private zone: NgZone) {
+
   }
 
   ngOnInit() {
@@ -30,6 +33,9 @@ export class MapComponent implements OnInit, OnChanges {
     this.nativeMapElement = this.element.nativeElement.querySelector('div#map');
     this.initMap();
     this.initSearchBox();
+
+
+
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -167,4 +173,20 @@ export class MapComponent implements OnInit, OnChanges {
       this.map.fitBounds(bounds);
     }.bind(this));
   }
+
+
+   createLine(){
+      let myPolyline = new google.maps.Polyline({
+       path: this.myCoordinates,
+       geodesic: true,
+       strokeColor: '#FF0000',
+       strokeOpacity: 1.0,
+       strokeWeight: 2,
+       map: this.map
+     })
+
+   }
+
+
+
 }
