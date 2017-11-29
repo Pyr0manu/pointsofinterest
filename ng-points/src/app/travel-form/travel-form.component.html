@@ -1,0 +1,55 @@
+<div  class="trip-form-toggle">
+    <button (click)="toggleTrip()">Itinéraire</button>
+</div>
+
+<div class="trip-form" *ngIf="tripActivation">
+
+  <form class="start-form">
+    <label >Départ :
+      <select [(ngModel)]="start" name="start" [disabled]="tripComputation">
+        <option *ngFor="let currentPoint of getPoints()" [ngValue]="currentPoint">{{currentPoint.nom}}</option>
+      </select>
+      <div class="start-print" *ngIf="start">&#8618; {{start?.nom}}</div>
+    </label>
+  </form>
+  <div class="steps">
+    <form class="steps-form">
+      <label>Étapes :
+
+        <select [(ngModel)]="selectedPoint" name="steps" [disabled]="tripComputation">
+          <option *ngFor="let currentPoint of getPoints()" [ngValue]="currentPoint">{{currentPoint.nom}}</option>
+        </select>
+
+        <div  *ngIf="tripActivation" class="steps-print">
+
+          <div *ngIf="!tripComputation && getSteps()">
+            <div *ngFor="let currentPoint of getSteps()">
+              &#8618; {{currentPoint?.nom}}
+            </div>
+          </div>
+
+          <div *ngIf="tripComputation">
+            <div  *ngFor="let currentPoint of tripOrdered; let num=index">
+              {{num+1}} &rarr;  {{currentPoint?.nom}}
+            </div>
+          </div>
+
+        </div>
+      </label>
+    </form>
+
+      <button (click)="addStep(selectedPoint)" [disabled]="tripComputation">Ajouter</button>
+      <button (click)="removeStep(selectedPoint)" [disabled]="tripComputation">Supprimer</button>
+  </div>
+</div>
+<div  *ngIf="tripActivation" class="compute-button">
+<div *ngIf="!tripComputation">
+  <button (click)="computeTrip(start, steps);toggleResults();">Calculer</button>
+</div>
+<div *ngIf="tripComputation">
+  <button (click)="toggleResults();">Editer</button>
+</div>
+</div>
+
+
+

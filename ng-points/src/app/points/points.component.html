@@ -43,6 +43,6 @@
   </tr>
 
 </table>
+<app-travel-form [points]="getPoints()"></app-travel-form>
 <app-map (updatePointMap)="initPointMap()" [myCoordinates]="getCoordinateTab()" [pointsFromPointsComponent]="getPoints()"></app-map>
 <app-point-form (createPointEvent)="updateList($event)"> </app-point-form>
-
