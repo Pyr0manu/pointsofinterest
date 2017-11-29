@@ -12,61 +12,68 @@ import {PointsService} from "../services/points.service";
 export class PointsComponent implements OnInit {
 
 
-  points:Point[] = [];
-  motClef : string;
-  choixColonne :string;
-  categories :Categorie[] = [];
-  coordinate:Coordinate={};
-  myCoordinates : Coordinate[]=[];
-  @ViewChild(MapComponent) map:MapComponent;
-  @ViewChild(PointFormComponent) pointForm:PointFormComponent
+  points: Point[] = [];
+  motClef: string;
+  choixColonne: string;
+  categories: Categorie[] = [];
+
+  myCoordinates: Coordinate[] = [];
+  @ViewChild(MapComponent) map: MapComponent;
+  @ViewChild(PointFormComponent) pointForm: PointFormComponent
 
   ngOnInit() {
     this.pointsService.getPoints().subscribe(points => {
-      this.points = points; });
-    for (let i = 0; i < this.points.length; i++) {
-      this.coordinate.lat = this.points[i].latitude;
-      this.coordinate.lng = this.points[i].longitude;
-      this.myCoordinates.push(this.coordinate)
-    }
+
+      this.points = points;
+
+      for (let i = 0; i < this.points.length; i++) {
+        const coordinate: Coordinate ={};
+        coordinate.lat = this.points[i].latitude;
+        coordinate.lng = this.points[i].longitude;
+        this.myCoordinates.push(coordinate)
+      }
+    });
   }
 
-  constructor(public pointsService : PointsService){
-    this.motClef=""
+  constructor(public pointsService: PointsService) {
+    this.motClef = ""
     this.pointsService.getCategorie().subscribe(categories => this.categories = categories);
   }
 
-  getPoints():Point[]{
-   return this.points;
+  getPoints(): Point[] {
+    return this.points;
   }
 
-  filterList(){
-    if(this.motClef.length>0 && this.choixColonne.length>1){
+  filterList() {
+    if (this.motClef.length > 0 && this.choixColonne.length > 1) {
       this.pointsService.filterPoints(this.motClef, this.choixColonne).subscribe(points => {
-        this.points = points; })
-        this.map.addPoints(this.points)
+        this.points = points;
+      })
+      this.map.addPoints(this.points)
     }
     else {
       this.pointsService.getPoints().subscribe(points => {
-        this.points = points; })
-        this.map.addPoints(this.points)
+        this.points = points;
+      })
+      this.map.addPoints(this.points)
     }
   }
 
-  updateList(point:Point){
+  updateList(point: Point) {
     this.points.push(point);
     this.map.addPoints(this.points);
   }
 
-  updateListRemove(point : Point){
-    this.points = this.points.filter(p => p!==point );
+  updateListRemove(point: Point) {
+    this.points = this.points.filter(p => p !== point);
     this.map.addPoints(this.points);
   }
 
-  getCategories():Categorie[]{
+  getCategories(): Categorie[] {
     return this.categories;
   }
-  getCoordinateTab():Coordinate[] {
+
+  getCoordinateTab(): Coordinate[] {
 
     return this.myCoordinates
   }

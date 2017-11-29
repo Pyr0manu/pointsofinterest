@@ -174,7 +174,6 @@ export class MapComponent implements OnInit, OnChanges {
     }.bind(this));
   }
 
-
    createLine(){
       let myPolyline = new google.maps.Polyline({
        path: this.myCoordinates,
