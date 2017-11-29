@@ -18,7 +18,6 @@ export class MapComponent implements OnInit, OnChanges {
   searchBox: any;
   nativeMapElement: any;
   map: any;
-  @Input() myCoordinates : Coordinate[]=[];
   @Input() pointsFromPointsComponent: Point[] = [];
   point: Point
   geocoder: any = new google.maps.Geocoder();
@@ -174,15 +173,21 @@ export class MapComponent implements OnInit, OnChanges {
     }.bind(this));
   }
 
-   createLine(){
-      let myPolyline = new google.maps.Polyline({
-       path: this.myCoordinates,
-       geodesic: true,
-       strokeColor: '#FF0000',
-       strokeOpacity: 1.0,
-       strokeWeight: 2,
-       map: this.map
+   createLine(coordinates:Coordinate[]){
+
+     this.zone.run(()=>
+     {
+       debugger
+       let myPolyline = new google.maps.Polyline({
+         path: coordinates,
+         geodesic: true,
+         strokeColor: '#FF0000',
+         strokeOpacity: 1.0,
+         strokeWeight: 2,
+         map: this.map
+       })
      })
+
 
    }
 

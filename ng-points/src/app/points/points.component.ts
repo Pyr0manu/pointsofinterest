@@ -17,21 +17,12 @@ export class PointsComponent implements OnInit {
   choixColonne: string;
   categories: Categorie[] = [];
 
-  myCoordinates: Coordinate[] = [];
   @ViewChild(MapComponent) map: MapComponent;
   @ViewChild(PointFormComponent) pointForm: PointFormComponent
 
   ngOnInit() {
     this.pointsService.getPoints().subscribe(points => {
-
       this.points = points;
-
-      for (let i = 0; i < this.points.length; i++) {
-        const coordinate: Coordinate ={};
-        coordinate.lat = this.points[i].latitude;
-        coordinate.lng = this.points[i].longitude;
-        this.myCoordinates.push(coordinate)
-      }
     });
   }
 
@@ -73,8 +64,8 @@ export class PointsComponent implements OnInit {
     return this.categories;
   }
 
-  getCoordinateTab(): Coordinate[] {
-
-    return this.myCoordinates
+  displayOrderedPoints(points:Point[]){
+    const coordinates = this.pointsService.convertPointsInCoordinates(points)
+    this.map.createLine(coordinates)
   }
 }

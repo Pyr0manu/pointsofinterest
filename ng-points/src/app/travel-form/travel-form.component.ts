@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {PointsService} from "../services/points.service";
 import {Point} from "../../models/models";
 
@@ -14,6 +14,7 @@ export class TravelFormComponent implements OnInit {
   selectedPoint:Point
   start:Point = null;
   @Input() points:Point[];
+  @Output() returnTripOrdered: EventEmitter<Point[]> = new EventEmitter();
   steps:Point[] = [];
   tripOrdered:Point[] = [];
 
@@ -48,6 +49,10 @@ export class TravelFormComponent implements OnInit {
   }
 
   computeTrip(start:Point, steps:Point[]){
-    this.pointsService.computeTrip(start, steps).subscribe(points => this.tripOrdered = points);
+    this.pointsService.computeTrip(start, steps).subscribe(points => {
+
+      this.tripOrdered = points
+      this.returnTripOrdered.emit(this.tripOrdered)
+    });
   }
 }

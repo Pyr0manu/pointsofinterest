@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs/Observable";
-import {Categorie, Point, PathLoop} from "../../models/models";
+import {Categorie, Point, PathLoop, Coordinate} from "../../models/models";
 import {Http} from "@angular/http";
 import "rxjs/add/operator/map"
 
@@ -63,5 +63,15 @@ export class PointsService {
   computeTrip(depart: Point, etapes: Point[]): Observable<Point[]> {
     this.pathLoop = { depart: depart, etapes: etapes};
     return this.http.post('http://localhost:8080/poi/api/points/itineraire', this.pathLoop).map(response => response.json());
+  }
+  convertPointsInCoordinates(points:Point[]):Coordinate[]{
+    let myCoordinates:Coordinate[]=[];
+    for (let i = 0; i < points.length; i++) {
+      const coordinate: Coordinate ={};
+      coordinate.lat = points[i].latitude;
+      coordinate.lng = points[i].longitude;
+      myCoordinates.push(coordinate)
+    }
+    return myCoordinates;
   }
 }
